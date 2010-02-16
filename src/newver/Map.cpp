@@ -23,8 +23,8 @@
  */
 void Map::Reload(const std::string &File, const std::string &Table)
 {
-	std::ifstream file(File.c_str(), ios::in | ios::binary);
-	std::ifstream table(Table.c_str(), ios::in | ios::binary);
+	std::ifstream file(File.c_str(), std::ios::in | std::ios::binary);
+	std::ifstream table(Table.c_str(), std::ios::in | std::ios::binary);
 	std::map<char, std::string> m;
 	char c;
 	std::string s;
@@ -33,7 +33,7 @@ void Map::Reload(const std::string &File, const std::string &Table)
 	{
 		table.get(c);
 		getline(table, s, '\n');
-		m.insert(c, s);
+		m.insert(std::pair<char, std::string>(c, s));
 	}
 	// Loading from the file
 	size_t x = 0, y = 0;
@@ -61,10 +61,10 @@ void Map::Reload(const std::string &File, const std::string &Table)
  * 
  * @author Lenoa
  */
-void Map::Render(sf::RenderTarget &Target)
+void Map::Render(sf::RenderTarget &Target) const
 {
-	for(std::vector< std::vector< Tile > >::iterator it = myMap.begin(); it != myMap.end(); ++it)
-		for(std::vector< Tile >::iterator i = (*it).begin(); i != (*it).end(); ++i)
+	for(std::vector< std::vector< Tile > >::const_iterator it = myMap.begin(); it != myMap.end(); ++it)
+		for(std::vector< Tile >::const_iterator i = (*it).begin(); i != (*it).end(); ++i)
 			Target.Draw(*i);
 }
 

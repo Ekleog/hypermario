@@ -24,7 +24,7 @@
  *
  * @author Lenoa
  */
-static std::map<std::string, sf::Image> ImageManager::ourMap;
+std::map<std::string, sf::Image> ImageManager::ourMap;
 
 /**
  * This function returns the image associated to the file name.
@@ -43,7 +43,7 @@ static std::map<std::string, sf::Image> ImageManager::ourMap;
  *
  * @author Lenoa
  */
-static sf::Image &ImageManager::Get(const std::string &Image)
+sf::Image &ImageManager::Get(const std::string &Image)
 {
 	sf::Image &I = ourMap[Image];
 	if(I.GetWidth() == 0 && I.GetHeight() == 0)
