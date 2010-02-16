@@ -1,0 +1,3 @@
+ImageManager.cpp: Use exceptions to abort if error
+
+Add an exception class
