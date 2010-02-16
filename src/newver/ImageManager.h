@@ -50,6 +50,7 @@ class ImageManager
 		 * a color key of transparency for the whole program. So <b>BE CAREFUL !</b>
 		 *
 		 * @param Image the file name of the image to get
+		 * @throws Exception_ImageNotLoaded if the image with the requested file name was not already opened and couldn't be opened
 		 * @see sf::Image
 		 * @see std::string
 		 * @version 1.0

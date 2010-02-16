@@ -6,6 +6,13 @@
 
 #include "ImageManager.h"
 
+#include <map>
+#include <string>
+
+#include <SFML/Graphics.hpp>
+
+#include "Exception_ImageNotLoaded.h"
+
 /**
  * ourMap is a map std::string - sf::Image : It maps the file name of the image to the
  * image itself.
@@ -17,7 +24,7 @@
  *
  * @author Lenoa
  */
-static std::map ImageManager::ourMap;
+static std::map<std::string, sf::Image> ImageManager::ourMap;
 
 /**
  * This function returns the image associated to the file name.
@@ -29,6 +36,7 @@ static std::map ImageManager::ourMap;
  * a color key of transparency for the whole program. So <b>BE CAREFUL !</b>
  *
  * @param Image the file name of the image to get
+ * @throws Exception_ImageNotLoaded if the image with the requested file name was not already opened and couldn't be opened
  * @see sf::Image
  * @see std::string
  * @version 1.0
@@ -39,12 +47,8 @@ static sf::Image &ImageManager::Get(const std::string &Image)
 {
 	sf::Image &I = ourMap[Image];
 	if(I.GetWidth() == 0 && I.GetHeight() == 0)
-	{
 		if(!I.LoadFromFile(Image))
-		{
-			// ERROR
-		}
-	}
+			throw Exception_ImageNotLoaded(Image.c_str());
 	return I;
 }
 
