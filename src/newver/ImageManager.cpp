@@ -48,7 +48,7 @@ static sf::Image &ImageManager::Get(const std::string &Image)
 	sf::Image &I = ourMap[Image];
 	if(I.GetWidth() == 0 && I.GetHeight() == 0)
 		if(!I.LoadFromFile(Image))
-			throw Exception_ImageNotLoaded(Image.c_str());
+			throw Exception_ImageNotLoaded(Image);
 	return I;
 }
 
