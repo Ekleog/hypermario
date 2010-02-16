@@ -28,7 +28,7 @@ clean:
 	$(RM) -f *~
 	$(RM) -f *.o
 mrproper: clean
-	$(RM) -f executable
+	$(RM) -f $(EXEC)
 
 ImageManager.o: ImageManager.h Exception_ImageNotLoaded.h Exception.h
 Tile.o: Tile.h ImageManager.h
