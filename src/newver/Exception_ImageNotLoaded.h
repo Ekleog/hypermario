@@ -57,7 +57,7 @@ class Exception_ImageNotLoaded : public Exception
 		 */
 		const char *GetFile() const throw()
 			{ return myFile; }
-}
+};
 
 #endif // EXCEPTION__IMAGE_NOT_LOADED_INCLUDED
 
