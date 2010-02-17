@@ -21,6 +21,7 @@
  * @param File the file in which load the map
  * @param Table the file in which load the correspondancy table of the tiles
  */
+#include <iostream>
 void Map::Reload(const std::string &File, const std::string &Table)
 {
 	std::ifstream file(File.c_str(), std::ios::in | std::ios::binary);
@@ -29,27 +30,25 @@ void Map::Reload(const std::string &File, const std::string &Table)
 	char c;
 	std::string s;
 	// Loading the correspondancy table <Tile id>/<Image file name>
-	while(!table.eof())
+	while(std::getline(table, s, '\n'))
 	{
-		table.get(c);
-		getline(table, s, '\n');
-		m.insert(std::pair<char, std::string>(c, s));
+		c = s.at(0);
+		s = s.substr(1);
+		if(s.length() > 0)
+			m.insert(std::pair<char, std::string>(c, s));
 	}
 	// Loading from the file
-	size_t x = 0, y = 0;
-	while(!file.eof())
+	size_t y = 0;
+	while(std::getline(file, s))
 	{
-		file.get(c);
-		if(c == '\n')
+		myMap.push_back(std::vector<Tile>());
+		size_t x = 0;
+		for(std::string::const_iterator i = s.begin(); i != s.end(); ++i)
 		{
-			myMap.push_back(std::vector< Tile >());
-			++y;
-		}
-		else
-		{
-			myMap.back().push_back(Tile(m[c], x, y));
+			myMap.back().push_back(Tile(m[*i], x, y));
 			++x;
 		}
+		++y;
 	}
 }
 

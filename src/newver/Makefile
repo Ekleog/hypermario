@@ -17,9 +17,9 @@ RM=rm
 
 all: $(EXEC)
 ifeq ($(DEBUG),yes)
-	@echo "Compiling in DEBUG mode"
+	@echo "Compiled in DEBUG mode"
 else
-	@echo "Compiling in RELEASE mode"
+	@echo "Compiled in RELEASE mode"
 endif
 
 $(EXEC): ImageManager.o Tile.o Map.o main.o

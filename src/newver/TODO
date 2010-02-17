@@ -1,1 +1,2 @@
-- Test the code with a fixed map
+- Add a system of properties of the tiles : breakable, pushable (box), unbreakable.
+- Add a system of monsters
