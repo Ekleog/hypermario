@@ -21,7 +21,6 @@
  * @param File the file in which load the map
  * @param Table the file in which load the correspondancy table of the tiles
  */
-#include <iostream>
 void Map::Reload(const std::string &File, const std::string &Table)
 {
 	std::ifstream file(File.c_str(), std::ios::in | std::ios::binary);
