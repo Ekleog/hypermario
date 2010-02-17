@@ -14,6 +14,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Tile.h"
+#include "TileAttributes.h"
 
 /**
  * It loads the file to the map
@@ -25,16 +26,13 @@ void Map::Reload(const std::string &File, const std::string &Table)
 {
 	std::ifstream file(File.c_str(), std::ios::in | std::ios::binary);
 	std::ifstream table(Table.c_str(), std::ios::in | std::ios::binary);
-	std::map<char, std::string> m;
-	char c;
+	std::map<char, TileAttributes> m;
 	std::string s;
 	// Loading the correspondancy table <Tile id>/<Image file name>
 	while(std::getline(table, s, '\n'))
 	{
-		c = s.at(0);
-		s = s.substr(1);
-		if(s.length() > 0)
-			m.insert(std::pair<char, std::string>(c, s));
+		if(s.length() > 2)
+			m.insert(std::pair<char, TileAttributes>(s[0], TileAttributes(s.substr(2), s[1])));
 	}
 	// Loading from the file
 	size_t y = 0;
@@ -44,7 +42,7 @@ void Map::Reload(const std::string &File, const std::string &Table)
 		size_t x = 0;
 		for(std::string::const_iterator i = s.begin(); i != s.end(); ++i)
 		{
-			myMap.back().push_back(Tile(m[*i], x, y));
+			myMap.back().push_back(Tile(m[*i].Filename, m[*i].Attributes, x, y));
 			++x;
 		}
 		++y;

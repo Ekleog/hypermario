@@ -1,2 +1,6 @@
-- Add a system of properties of the tiles : breakable, pushable (box), unbreakable.
+- Add a Mario (with collisions)
+- Add a system of scrolling left-right
+- Add a system of jump
+- Add a system of scrolling top-right
 - Add a system of monsters
+- Add collisions monsters-mario

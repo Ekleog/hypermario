@@ -1,6 +1,7 @@
 Files types:
 - extension .table:
   - first char of the line : identifier of the tile
-  - after : path to the image associated
+  - second byte : flags (as in TileAttributes)
+  - after : path to the associated image
 - extension .map:
   - Organisation of identifier of tiles, one line per line on the screen

@@ -17,7 +17,7 @@
  * This class models a tile, which is a sprite which isn't animated and doesn't move.
  *
  * @see sf::Sprite
- * @version 1.0
+ * @version 1.1
  *
  * @author Lenoa
  */
@@ -35,6 +35,15 @@ class Tile : public sf::Sprite
 		 * @author Lenoa
 		 */
 		static sf::Uint32 ourWidth, ourHeight;
+
+		/**
+		 * The attributes of the tile
+		 *
+		 * @version 1.0
+		 *
+		 * @author Lenoa
+		 */
+		unsigned char myAttributes;
 
 	public:
 		/**
@@ -54,14 +63,16 @@ class Tile : public sf::Sprite
 		 * The constructor for <i>Tile</i>.
 		 *
 		 * @param Image the tile's image's associated filename
+		 * @param Attributes the tile's attributes
 		 * @param PosX the position on the X axis of the tile
 		 * @param PosY the position on the Y axis of the tile
-		 * @version 1.0
+		 * @version 1.1
 		 *
 		 * @author Lenoa
 		 */
-		Tile(const std::string &Image, sf::Uint32 PosX, sf::Uint32 PosY)
+		Tile(const std::string &Image, unsigned char Attributes, sf::Uint32 PosX, sf::Uint32 PosY)
 			: sf::Sprite(ImageManager::Get(Image), sf::Vector2f(PosX * ourWidth, PosY * ourHeight))
+			, myAttributes(Attributes)
 		{}
 
 		/**
