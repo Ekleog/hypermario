@@ -13,6 +13,7 @@
  */
 void Game::Run()
 {
+	myWindow->SetFramerateLimit(26);
 	Mario mario = Mario(myMap->GetMarioPosX(), myMap->GetMarioPosY(), *myMap);
 	bool Stop = false;
 	while(!Stop)
@@ -49,7 +50,10 @@ void Game::Run()
 					break;
 			}
 		}
+		mario.Update();
+
 		myWindow->SetView(mario.GetView());
+		
 		myWindow->Clear();
 		myWindow->Draw(*myMap);
 		myWindow->Draw(mario);

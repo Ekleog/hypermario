@@ -13,6 +13,21 @@
 #include "TileAttributes.h"
 
 /**
+ * It updates the Mario
+ *
+ * @author Lenoa
+ */
+void Mario::Update()
+{
+	if(mySprite.GetPosition().x > myPosX * Tile::GetDimensionX())
+		mySprite.Move(-2, 0);
+	else if(mySprite.GetPosition().x < myPosX * Tile::GetDimensionX())
+		mySprite.Move(+2, 0);
+	else
+		myIsMoving = false;
+}
+
+/**
  * It returns the best view englobing Mario.
  *
  * @return the view centered on Mario if possible

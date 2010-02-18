@@ -40,6 +40,14 @@ class Mario : public sf::Drawable
 		 */
 		unsigned long myPosX, myPosY;
 
+
+		/**
+		 * Is mario moving ?
+		 *
+		 * @author Lenoa
+		 */
+		bool myIsMoving;
+
 		/**
 		 * The map in which Mario is evoluting
 		 *
@@ -77,16 +85,6 @@ class Mario : public sf::Drawable
 		 */
 		void Render(sf::RenderTarget &Target) const;
 
-		/**
-		 * It refreshes the sprite's position on the map
-		 *
-		 * @version 1.0
-		 *
-		 * @author Lenoa
-		 */
-		void RefreshSpritePosition()
-			{ mySprite.SetPosition(myPosX * Tile::GetDimensionX(), myPosY * Tile::GetDimensionY()); }
-
 	public:
 		/**
 		 * The constructor
@@ -96,9 +94,11 @@ class Mario : public sf::Drawable
 		 * @author Lenoa
 		 */
 		Mario(unsigned long PosX, unsigned long PosY, const Map &map)
-			: myPosX(PosX), myPosY(PosY - 1), myMap(&map), mySprite(ImageManager::Get("images/mario.png"))
-			, mySize(Medium)
-		{ RefreshSpritePosition(); }
+			: myPosX(PosX), myPosY(PosY - 1)
+			  , myIsMoving(false)
+			  , myMap(&map), mySprite(ImageManager::Get("images/mario.png"))
+			  , mySize(Medium)
+		{ mySprite.SetPosition(myPosX * Tile::GetDimensionX(), myPosY * Tile::GetDimensionY()); }
 
 		/**
 		 * Can Mario go to the left ?
@@ -127,7 +127,7 @@ class Mario : public sf::Drawable
 		 * @author Lenoa
 		 */
 		void GoRight()
-			{ ++myPosX; RefreshSpritePosition(); }
+			{ if(!myIsMoving) { ++myPosX; myIsMoving = true; } }
 		/**
 		 * Mario goes to the left
 		 *
@@ -136,7 +136,14 @@ class Mario : public sf::Drawable
 		 * @author Lenoa
 		 */
 		void GoLeft()
-			{ --myPosX; RefreshSpritePosition(); }
+			{ if(!myIsMoving) { --myPosX; myIsMoving = true; } }
+
+		/**
+		 * It updates the Mario
+		 *
+		 * @author Lenoa
+		 */
+		void Update();
 
 		/**
 		 * It returns the best view englobing Mario.
