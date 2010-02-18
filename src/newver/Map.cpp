@@ -7,14 +7,14 @@
 #include "Map.h"
 
 #include <string>
-#include <vector>
 #include <fstream>
 #include <map>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 
-#include "Tile.h"
 #include "TileAttributes.h"
+#include "Tile.h"
 
 /**
  * It loads the file to the map
@@ -35,18 +35,26 @@ void Map::Reload(const std::string &File, const std::string &Table)
 			m.insert(std::pair<char, TileAttributes>(s[0], TileAttributes(s.substr(2), s[1])));
 	}
 	// Loading from the file
-	size_t y = 0;
+	size_t y = 0, x;
+	myMaxX = 0;
 	while(std::getline(file, s))
 	{
 		myMap.push_back(std::vector<Tile>());
-		size_t x = 0;
+		x = 0;
 		for(std::string::const_iterator i = s.begin(); i != s.end(); ++i)
 		{
+			if(*i == 'M')
+			{
+				myMarioPosX = x;
+				myMarioPosY = y;
+			}
 			myMap.back().push_back(Tile(m[*i].Filename, m[*i].Attributes, x, y));
 			++x;
 		}
 		++y;
 	}
+	myMaxX = x - 1;
+	myMaxY = y - 1;
 }
 
 /**

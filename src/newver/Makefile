@@ -25,14 +25,16 @@ endif
 corres_gen: main_corres_gen.o
 	$(CXX) main_corres_gen.o -o corres_gen
 
+Game.o: Game.h Mario.h Map.h Tile.h TileAttributes.h ImageManager.h
 ImageManager.o: ImageManager.h Exception_ImageNotLoaded.h Exception.h
-Tile.o: Tile.h ImageManager.h
-Map.o: Map.h Tile.h ImageManager.h TileAttributes.h
+main.o: Tile.h Map.h Mario.h TileAttributes.h ImageManager.h
 main_corres_gen.o: TileAttributes.h
-main.o: Tile.h Map.h ImageManager.h
+Map.o: Map.h Tile.h TileAttributes.h Mario.h ImageManager.h
+Mario.o: Mario.h TileAttributes.h Map.h
+Tile.o: Tile.h ImageManager.h
 
-$(EXEC): ImageManager.o Tile.o Map.o main.o
-	$(CXX) ImageManager.o Tile.o Map.o main.o -o $(EXEC) $(LDFLAGS)
+$(EXEC): ImageManager.o Tile.o Map.o main.o Game.o Mario.o
+	$(CXX) ImageManager.o Tile.o Map.o main.o Game.o Mario.o -o $(EXEC) $(LDFLAGS)
 clean:
 	$(RM) -f *~
 	$(RM) -f maps/*~

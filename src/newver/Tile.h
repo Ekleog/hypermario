@@ -60,6 +60,27 @@ class Tile : public sf::Sprite
 			{ ourWidth = Width; ourHeight = Height; }
 
 		/**
+		 * This function returns the dimensions of the tiles on the X axis.
+		 *
+		 * @return tiles' width
+		 * @version 1.0
+		 *
+		 * @author Lenoa
+		 */
+		static sf::Uint32 GetDimensionX()
+			{ return ourWidth; }
+		/**
+		 * This function returns the dimensions of the tiles on the Y axis.
+		 *
+		 * @return tiles' height
+		 * @version 1.0
+		 *
+		 * @author Lenoa
+		 */
+		static sf::Uint32 GetDimensionY()
+			{ return ourHeight; }
+
+		/**
 		 * The constructor for <i>Tile</i>.
 		 *
 		 * @param Image the tile's image's associated filename
@@ -128,6 +149,17 @@ class Tile : public sf::Sprite
 		 */
 		sf::Uint32 GetY() const
 			{ return sf::Drawable::GetPosition().y / ourHeight; }
+
+		/**
+		 * It returns the attributes of the tile.
+		 *
+		 * @return the attributes of the tile
+		 * @version 1.0
+		 * 
+		 * @author Lenoa
+		 */
+		unsigned char GetAttributes() const
+			{ return myAttributes; }
 };
 
 #endif // TILE_INCLUDED

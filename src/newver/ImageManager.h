@@ -17,8 +17,6 @@
  *
  * <b>ATTENTION !</b> It is not thread-safe, not even reentrant.
  *
- * @see sf::Image
- * @see std::string
  * @version 1.0
  *
  * @author Lenoa
@@ -30,9 +28,6 @@ class ImageManager
 		 * ourMap is a map std::string - sf::Image : It maps the file name of the image to the
 		 * image itself.
 		 *
-		 * @see std::map
-		 * @see std::string
-		 * @see sf::Image
 		 * @version 1.0
 		 *
 		 * @author Lenoa
@@ -51,8 +46,6 @@ class ImageManager
 		 *
 		 * @param Image the file name of the image to get
 		 * @throws Exception_ImageNotLoaded if the image with the requested file name was not already opened and couldn't be opened
-		 * @see sf::Image
-		 * @see std::string
 		 * @version 1.0
 		 *
 		 * @author Lenoa
