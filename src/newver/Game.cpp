@@ -1,3 +1,7 @@
+/**
+ * @author Lenoa
+ */
+
 #include "Game.h"
 
 #include <SFML/Graphics.hpp>
@@ -7,17 +11,21 @@
 /**
  * The method to call to make the game play
  *
- * @version 1.0
- *
  * @author Lenoa
  */
 void Game::Run()
 {
+	// Set the frame rate
 	myWindow->SetFramerateLimit(26);
+
+	// Initialise the Mario
 	Mario mario = Mario(myMap->GetMarioPosX(), myMap->GetMarioPosY(), *myMap);
+
+	// Main loop
 	bool Stop = false;
 	while(!Stop)
 	{
+		// Event managing
 		sf::Event Event;
 		while(myWindow->GetEvent(Event))
 		{
@@ -50,10 +58,14 @@ void Game::Run()
 					break;
 			}
 		}
+
+		// Update the map and all which is on it
 		mario.Update();
 
+		// Update the view
 		myWindow->SetView(mario.GetView());
 		
+		// Redraw the screen
 		myWindow->Clear();
 		myWindow->Draw(*myMap);
 		myWindow->Draw(mario);

@@ -1,6 +1,4 @@
 /**
- * @version 1.0
- *
  * @author Lenoa
  */
 
@@ -28,20 +26,19 @@ void Mario::Update()
 }
 
 /**
- * It returns the best view englobing Mario.
- *
  * @return the view centered on Mario if possible
- * @version 1.0
- *
  * @author Lenoa
  */
 sf::View Mario::GetView() const
 {
+	// Compute the view centred on Mario
 	long
 		l = mySprite.GetPosition().x + (mySprite.GetSize().x / 2) - (WINDOW_WIDTH / 2),
 		r = l + WINDOW_WIDTH,
 		t = mySprite.GetPosition().y + (mySprite.GetSize().y / 2) - (WINDOW_HEIGHT / 2),
 		b = t + WINDOW_HEIGHT;
+
+	// Re-centrate (if out of the limits of the map)
 	if(l < 0)
 	{
 		l = 0;
@@ -62,6 +59,8 @@ sf::View Mario::GetView() const
 		b = (myMap->GetMaxY() + 1) * Tile::GetDimensionY();
 		t = b - WINDOW_HEIGHT;
 	}
+
+	// Return the view
 	return sf::View(sf::FloatRect(l, t, r, b));
 }
 
@@ -69,8 +68,6 @@ sf::View Mario::GetView() const
  * It renders the mario to the target
  *
  * @param Target the target on which render
- * @version 1.0
- *
  * @author Lenoa
  */
 void Mario::Render(sf::RenderTarget &Target) const
@@ -79,11 +76,7 @@ void Mario::Render(sf::RenderTarget &Target) const
 }
 
 /**
- * Can Mario go to the left ?
- *
  * @return true if Mario can go to the left, false otherwise
- * @version 1.0
- *
  * @author Lenoa
  */
 bool Mario::CanGoLeft() const
@@ -98,11 +91,7 @@ bool Mario::CanGoLeft() const
 	);
 }
 /**
- * Can Mario go to the right ?
- *
  * @return true if Mario can go to the right, false otherwise
- * @version 1.0
- *
  * @author Lenoa
  */
 bool Mario::CanGoRight() const

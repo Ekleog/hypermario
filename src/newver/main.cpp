@@ -1,3 +1,7 @@
+/**
+ * @author Lenoa
+ */
+
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
@@ -6,6 +10,12 @@
 #include "Game.h"
 #include "config.h"
 
+/**
+ * The main function of a program which just displays the game
+ *
+ * @return 0 if success ; 1 otherwise
+ * @author Lenoa
+ */
 int main(int, char**)
 {
 	Tile::SetTilesDimensions(32, 32);

@@ -1,6 +1,4 @@
 /**
- * @version 1.1
- *
  * @author Lenoa
  */
 
@@ -17,8 +15,6 @@
  *
  * <b>ATTENTION !</b> It is not thread-safe, not even reentrant.
  *
- * @version 1.0
- *
  * @author Lenoa
  */
 class ImageManager
@@ -27,10 +23,6 @@ class ImageManager
 		/**
 		 * ourMap is a map std::string - sf::Image : It maps the file name of the image to the
 		 * image itself.
-		 *
-		 * @version 1.0
-		 *
-		 * @author Lenoa
 		 */
 		static std::map<std::string, sf::Image> ourMap;
 	
@@ -45,10 +37,8 @@ class ImageManager
 		 * a color key of transparency for the whole program. So <b>BE CAREFUL !</b>
 		 *
 		 * @param Image the file name of the image to get
+		 * @return a reference to the image associated to the filename in memory
 		 * @throws Exception_ImageNotLoaded if the image with the requested file name was not already opened and couldn't be opened
-		 * @version 1.0
-		 *
-		 * @author Lenoa
 		 */
 		static sf::Image &Get(const std::string &Image);
 };

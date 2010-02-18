@@ -1,3 +1,5 @@
+## @author Lenoa
+
 DEBUG=yes
 
 EXEC=executable

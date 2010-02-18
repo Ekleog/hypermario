@@ -1,3 +1,7 @@
+/**
+ * @author Lenoa
+ */
+
 #include <iostream>
 #include <map>
 #include <string>
@@ -5,18 +9,28 @@
 
 #include "TileAttributes.h"
 
+/**
+ * The main function of the program which just edits the correspondance table
+ *
+ * @return 0 if success ; 1 otherwise
+ * @author Lenoa
+ */
 int main(int, char**)
 {
 	bool stop = false;
 	std::map<char, TileAttributes> m;
 	std::ifstream file("maps/correspondance.table", std::ios::in | std::ios::binary);
 	std::string s;
+
+	// Read the file
 	while(std::getline(file, s, '\n'))
 	{
 		if(s.length() > 2)
 			m.insert(std::pair<char, TileAttributes>(s[0], TileAttributes(s.substr(2), s[1])));
 	}
 	file.close();
+
+	// Edit
 	while(!stop)
 	{
 		std::cout << "Actually, the correspondance table is :" << std::endl << std::endl;
@@ -72,6 +86,8 @@ int main(int, char**)
 				break;
 		}
 	}
+
+	// Write the changes
 	std::ofstream out("maps/correspondance.table", std::ios::out | std::ios::binary | std::ios::trunc);
 	for(std::map<char, TileAttributes>::const_iterator it = m.begin(); it != m.end(); ++it)
 	{

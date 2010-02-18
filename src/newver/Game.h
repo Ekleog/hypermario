@@ -1,6 +1,4 @@
 /**
- * @version 1.0
- *
  * @author Lenoa
  */
 
@@ -14,9 +12,6 @@
 /**
  * It models a game of Hypermario
  *
- * @see Map
- * @version 1.0
- *
  * @author Lenoa
  */
 class Game
@@ -24,19 +19,11 @@ class Game
 	private:
 		/**
 		 * The window in which render the game
-		 *
-		 * @version 1.0
-		 *
-		 * @author Lenoa
 		 */
 		sf::RenderWindow *myWindow;
 
 		/**
 		 * The map to play
-		 *
-		 * @version 1.0
-		 *
-		 * @author Lenoa
 		 */
 		Map *myMap;
 
@@ -46,19 +33,14 @@ class Game
 		 *
 		 * <b>ATTENTION :</b> Do not delete the window/game map before the Game object, otherwise the Game object won't be valid !
 		 *
-		 * @version 1.0
-		 *
-		 * @author Lenoa
+		 * @param Window the window on which render the game
+		 * @param GameMap the map to play
 		 */
 		Game(sf::RenderWindow &Window, Map &GameMap)
 			: myWindow(&Window), myMap(&GameMap) {}
 
 		/**
 		 * The method to call to make the game play
-		 *
-		 * @version 1.0
-		 *
-		 * @author Lenoa
 		 */
 		void Run();
 };
