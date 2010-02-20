@@ -7,6 +7,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "config.h"
+#include "Collision.h"
+#include "Map.h"
 #include "Tile.h"
 #include "TileAttributes.h"
 
@@ -17,12 +19,23 @@
  */
 void Mario::Update()
 {
-	if(mySprite.GetPosition().x > myPosX * Tile::GetDimensionX())
-		mySprite.Move(-2, 0);
-	else if(mySprite.GetPosition().x < myPosX * Tile::GetDimensionX())
-		mySprite.Move(+2, 0);
-	else
-		myIsMoving = false;
+	sf::IntRect Rect(Collision::GetBoundingBox(mySprite));
+
+	// Compute Y move
+	mySpeedY += GRAVITATION;
+	if(mySpeedY < 0)
+		mySprite.Move(0, -myMap->   TopMax(Rect, -mySpeedY));
+	else if(mySpeedY > 0)
+		mySprite.Move(0,  myMap->BottomMax(Rect,  mySpeedY));
+
+	// Re-compute rect
+	Rect = Collision::GetBoundingBox(mySprite);
+
+	// Compute X move
+	if(myIsGoingLeft && !myIsGoingRight)
+		mySprite.Move(-myMap->LeftMax(Rect, 2), 0);
+	else if(myIsGoingRight && !myIsGoingLeft)
+		mySprite.Move(+myMap->RightMax(Rect, 2), 0);
 }
 
 /**
@@ -31,7 +44,7 @@ void Mario::Update()
  */
 sf::View Mario::GetView() const
 {
-	// Compute the view centred on Mario
+	// Compute the view centered on Mario
 	long
 		l = mySprite.GetPosition().x + (mySprite.GetSize().x / 2) - (WINDOW_WIDTH / 2),
 		r = l + WINDOW_WIDTH,
@@ -81,14 +94,7 @@ void Mario::Render(sf::RenderTarget &Target) const
  */
 bool Mario::CanGoLeft() const
 {
-       	return (
-		myPosX > 0 && (
-			mySize == Little ? (myMap->TileAtPos(myPosX - 1, myPosY).GetAttributes() & TileAttributes::Empty) : (
-				(myMap->TileAtPos(myPosX - 1, myPosY + 1).GetAttributes() & TileAttributes::Empty) &&
-				(myMap->TileAtPos(myPosX - 1, myPosY    ).GetAttributes() & TileAttributes::Empty)
-			)
-		)
-	);
+	return true;
 }
 /**
  * @return true if Mario can go to the right, false otherwise
@@ -96,13 +102,6 @@ bool Mario::CanGoLeft() const
  */
 bool Mario::CanGoRight() const
 {
-       	return (
-		myPosX < myMap->GetMaxX() && (
-			mySize == Little ? (myMap->TileAtPos(myPosX + 1, myPosY).GetAttributes() & TileAttributes::Empty) : (
-				(myMap->TileAtPos(myPosX + 1, myPosY + 1).GetAttributes() & TileAttributes::Empty) &&
-				(myMap->TileAtPos(myPosX + 1, myPosY    ).GetAttributes() & TileAttributes::Empty)
-			)
-		)
-	);
+	return true;
 }
 

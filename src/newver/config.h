@@ -15,5 +15,10 @@
  */
 #define WINDOW_WIDTH 320
 
+/**
+ * The gravitation constant
+ */
+#define GRAVITATION 0.08
+
 #endif // CONFIG_INCLUDED
 

@@ -31,14 +31,14 @@ class Mario : public sf::Drawable
 
 	private:
 		/**
-		 * Those variables are the position of Mario on the X and Y axis.
+		 * Is mario moving left, right or not ?
 		 */
-		unsigned long myPosX, myPosY;
+		bool myIsGoingLeft, myIsGoingRight;
 
 		/**
-		 * Is mario moving ?
+		 * The speed of Mario on the Y axis (inverted, as required by SFML)
 		 */
-		bool myIsMoving;
+		float mySpeedY;
 
 		/**
 		 * The map in which Mario is evoluting
@@ -69,11 +69,11 @@ class Mario : public sf::Drawable
 		 * @param map the map on which Mario is evoluting
 		 */
 		Mario(unsigned long PosX, unsigned long PosY, const Map &map)
-			: myPosX(PosX), myPosY(PosY - 1)
-			  , myIsMoving(false)
+			: myIsGoingLeft(false), myIsGoingRight(false)
+			  , mySpeedY(0)
 			  , myMap(&map), mySprite(ImageManager::Get("images/mario.png"))
 			  , mySize(Medium)
-		{ mySprite.SetPosition(myPosX * Tile::GetDimensionX(), myPosY * Tile::GetDimensionY()); }
+		{ mySprite.SetPosition(PosX * Tile::GetDimensionX(), (PosY - 1) * Tile::GetDimensionY()); }
 
 		/**
 		 * @return true if Mario can go to the left, false otherwise
@@ -88,12 +88,29 @@ class Mario : public sf::Drawable
 		 * Mario goes to the right
 		 */
 		void GoRight()
-			{ if(!myIsMoving) { ++myPosX; myIsMoving = true; } }
+			{ myIsGoingRight = true; }
 		/**
 		 * Mario goes to the left
 		 */
 		void GoLeft()
-			{ if(!myIsMoving) { --myPosX; myIsMoving = true; } }
+			{ myIsGoingLeft = true; }
+
+		/**
+		 * Mario stops going to the left
+		 */
+		void StopGoingLeft()
+			{ myIsGoingLeft = false; }
+		/**
+		 * Mario stops going to the right
+		 */
+		void StopGoingRight()
+			{ myIsGoingRight = false; }
+
+		/**
+		 * Makes Mario jumping
+		 */
+		void Jump()
+			{ mySpeedY = -4.; }
 
 		/**
 		 * It updates the Mario

@@ -48,12 +48,32 @@ void Game::Run()
 						case sf::Key::Right:
 							if(mario.CanGoRight())
 								mario.GoRight();
+							break;
+
+						case sf::Key::Up:
+							mario.Jump();
+							break;
 
 						default:
 							break;
 					}
 					break;
-		
+
+				case sf::Event::KeyReleased:
+					switch(Event.Key.Code)
+					{
+						case sf::Key::Left:
+							mario.StopGoingLeft();
+							break;
+
+						case sf::Key::Right:
+							mario.StopGoingRight();
+							break;
+
+						default:
+							break;
+					}
+
 				default:
 					break;
 			}
