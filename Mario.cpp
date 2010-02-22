@@ -26,7 +26,13 @@ void Mario::Update()
 	if(mySpeedY < 0)
 		mySprite.Move(0, -myMap->   TopMax(Rect, -mySpeedY));
 	else if(mySpeedY > 0)
-		mySprite.Move(0,  myMap->BottomMax(Rect,  mySpeedY));
+	{
+		float i = myMap->BottomMax(Rect, mySpeedY);
+		if(i == 0)
+			mySpeedY = 0;
+		else
+			mySprite.Move(0,  myMap->BottomMax(Rect,  mySpeedY));
+	}
 
 	// Re-compute rect
 	Rect = Collision::GetBoundingBox(mySprite);
@@ -45,7 +51,7 @@ void Mario::Update()
 sf::View Mario::GetView() const
 {
 	// Compute the view centered on Mario
-	long
+	float
 		l = mySprite.GetPosition().x + (mySprite.GetSize().x / 2) - (WINDOW_WIDTH / 2),
 		r = l + WINDOW_WIDTH,
 		t = mySprite.GetPosition().y + (mySprite.GetSize().y / 2) - (WINDOW_HEIGHT / 2),
@@ -62,12 +68,12 @@ sf::View Mario::GetView() const
 		t = 0;
 		b = WINDOW_HEIGHT;
 	}
-	if(static_cast<unsigned long>(r) > (myMap->GetMaxX() + 1) * Tile::GetDimensionX())
+	if(r > (myMap->GetMaxX() + 1) * Tile::GetDimensionX())
 	{
 		r = (myMap->GetMaxX() + 1) * Tile::GetDimensionX();
 		l = r - WINDOW_WIDTH;
 	}
-	if(static_cast<unsigned long>(b) > (myMap->GetMaxY() + 1) * Tile::GetDimensionY())
+	if(b > (myMap->GetMaxY() + 1) * Tile::GetDimensionY())
 	{
 		b = (myMap->GetMaxY() + 1) * Tile::GetDimensionY();
 		t = b - WINDOW_HEIGHT;

@@ -6,10 +6,11 @@ EXEC=executable
 
 ifeq ($(DEBUG),yes)
 	CXXFLAGS=-g -W -Wall -pedantic
+	LDFLAGS=$(CXXFLAGS) -lsfml-system -lsfml-window -lsfml-graphics
 else
 	CXXFLAGS=-O3
+	LDFLAGS=$(CXXFLAGS) -lsfml-system -lsfml-window -lsfml-graphics
 endif
-LDFLAGS=$(CXXFLAGS) -lsfml-graphics
 
 CXX=g++
 RM=rm

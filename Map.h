@@ -31,12 +31,12 @@ class Map : public sf::Drawable
 		/**
 		 * It is the position of Mario at its begin place
 		 */
-		unsigned long myMarioPosX, myMarioPosY;
+		size_t myMarioPosX, myMarioPosY;
 
 		/**
 		 * It is the maximum values of X and Y
 		 */
-		unsigned long myMaxX, myMaxY;
+		size_t myMaxX, myMaxY;
 
 		/**
 		 * It renders the map to the target
@@ -62,24 +62,24 @@ class Map : public sf::Drawable
 		/**
 		 * @return Mario's X coordinate in the file
 		 */
-		unsigned long GetMarioPosX() const
+		size_t GetMarioPosX() const
 			{ return myMarioPosX; }
 		/**
 		 * @return Mario's Y coordinate in the file
 		 */
-		unsigned long GetMarioPosY() const
+		size_t GetMarioPosY() const
 			{ return myMarioPosY; }
 
 		/**
 		 * @return the maximum value on the X axis
 		 */
-		unsigned long GetMaxX() const
+		size_t GetMaxX() const
 			{ return myMaxX; }
 
 		/**
 		 * @return the maximum value on the Y axis
 		 */
-		unsigned long GetMaxY() const
+		size_t GetMaxY() const
 			{ return myMaxY; }
 
 		/**
@@ -102,25 +102,25 @@ class Map : public sf::Drawable
 		 * @param Max the max going to the top
 		 * @return the maximm number of pixel Mario can go to the top
 		 */
-		sf::Uint32 TopMax(const sf::IntRect &Rect, sf::Uint32 Max) const;
+		float TopMax(const sf::IntRect &Rect, float Max) const;
 		/**
 		 * @param Rect the bounding rect of the figure
 		 * @param Max the max going to the bottom
 		 * @return the maximm number of pixel Mario can go to the bottom
 		 */
-		sf::Uint32 BottomMax(const sf::IntRect &Rect, sf::Uint32 Max) const;
+		float BottomMax(const sf::IntRect &Rect, float Max) const;
 		/**
 		 * @param Rect the bounding rect of the figure
 		 * @param Max the max going to the left
 		 * @return the maximm number of pixel Mario can go to the left
 		 */
-		sf::Uint32 LeftMax(const sf::IntRect &Rect, sf::Uint32 Max) const;
+		float LeftMax(const sf::IntRect &Rect, float Max) const;
 		/**
 		 * @param Rect the bounding rect of the figure
 		 * @param Max the max going to the right
 		 * @return the maximm number of pixel Mario can go to the right
 		 */
-		sf::Uint32 RightMax(const sf::IntRect &Rect, sf::Uint32 Max) const;
+		float RightMax(const sf::IntRect &Rect, float Max) const;
 
 		/**
 		 * @param X the X position of the tile to test

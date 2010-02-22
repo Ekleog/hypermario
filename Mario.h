@@ -68,7 +68,7 @@ class Mario : public sf::Drawable
 		 * @param PosY the position of Mario on the Y axis
 		 * @param map the map on which Mario is evoluting
 		 */
-		Mario(unsigned long PosX, unsigned long PosY, const Map &map)
+		Mario(size_t PosX, size_t PosY, const Map &map)
 			: myIsGoingLeft(false), myIsGoingRight(false)
 			  , mySpeedY(0)
 			  , myMap(&map), mySprite(ImageManager::Get("images/mario.png"))

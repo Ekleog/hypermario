@@ -7,10 +7,10 @@
 /**
  * The width of the tiles
  */
-sf::Uint32 Tile::ourWidth;
+float Tile::ourWidth;
 
 /**
  * The height of the tiles
  */
-sf::Uint32 Tile::ourHeight;
+float Tile::ourHeight;
 
