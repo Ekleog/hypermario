@@ -14,6 +14,8 @@
 
 #include "TileAttributes.h"
 #include "Tile.h"
+#include "config.h"
+#include "Collision.h"
 
 /**
  * @param File the file in which load the map
@@ -37,7 +39,6 @@ void Map::Reload(const std::string &File, const std::string &Table)
 	std::ifstream file(File.c_str(), std::ios::in | std::ios::binary);
 	while(std::getline(file, s))
 	{
-		myMap.push_back(std::vector<Tile>());
 		x = 0;
 		for(std::string::const_iterator i = s.begin(); i != s.end(); ++i)
 		{
@@ -46,7 +47,7 @@ void Map::Reload(const std::string &File, const std::string &Table)
 				myMarioPosX = x;
 				myMarioPosY = y;
 			}
-			myMap.back().push_back(Tile(m[*i].Filename, m[*i].Attributes, x, y));
+			myTiles.push_back(Tile(m[*i].Filename, m[*i].Attributes, x * TILES_WIDTH, y * TILES_HEIGHT));
 			++x;
 		}
 		++y;
@@ -61,22 +62,18 @@ void Map::Reload(const std::string &File, const std::string &Table)
  * @param Max the max going to the top
  * @return the maximm number of pixel Mario can go to the top
  */
-float Map::TopMax(const sf::IntRect &Rect, float Max) const
+float Map::TopMax(const sf::Sprite &Rect, float Max) const
 {
 	float NbPix = 0;
-	size_t Left  = Rect.Left  / Tile::GetDimensionX();
-	size_t Right = Rect.Right / Tile::GetDimensionX();
-	if(Left > myMaxX || Right > myMaxX)
-		return 0.f;
+	sf::Sprite Copy(Rect);
 	while(NbPix < Max)
 	{
 		++NbPix;
-		size_t Top = (Rect.Top - NbPix) / Tile::GetDimensionY();
-		if(Top > myMaxY)
-			return NbPix - 1;
-		for(size_t I = Left; I <= Right; ++I)
-			if((TileAtPos(I, Top).GetAttributes() & TileAttributes::Empty) != TileAttributes::Empty)
+		Copy.Move(0, -NbPix);
+		for(std::vector<Tile>::const_iterator it(myTiles.begin()); it != myTiles.end(); ++it)
+			if(Collision::PixelTest(Copy, *it))
 				return NbPix - 1;
+		Copy.Move(0, NbPix);
 	}
 	return Max;
 }
@@ -85,22 +82,18 @@ float Map::TopMax(const sf::IntRect &Rect, float Max) const
  * @param Max the max going to the bottom
  * @return the maximm number of pixel Mario can go to the bottom
  */
-float Map::BottomMax(const sf::IntRect &Rect, float Max) const
+float Map::BottomMax(const sf::Sprite &Rect, float Max) const
 {
 	float NbPix = 0;
-	size_t Left  = Rect.Left  / Tile::GetDimensionX();
-	size_t Right = Rect.Right / Tile::GetDimensionX();
-	if(Left > myMaxX || Right > myMaxX)
-		return 0.f;
+	sf::Sprite Copy(Rect);
 	while(NbPix < Max)
 	{
 		++NbPix;
-		size_t Bottom = (Rect.Bottom + NbPix) / Tile::GetDimensionY();
-		if(Bottom > myMaxY)
-			return NbPix - 1;
-		for(size_t I = Left; I <= Right; ++I)
-			if((TileAtPos(I, Bottom).GetAttributes() & TileAttributes::Empty) != TileAttributes::Empty)
+		Copy.Move(0, NbPix);
+		for(std::vector<Tile>::const_iterator it(myTiles.begin()); it != myTiles.end(); ++it)
+			if(Collision::PixelTest(Copy, *it))
 				return NbPix - 1;
+		Copy.Move(0, -NbPix);
 	}
 	return Max;
 }
@@ -109,22 +102,18 @@ float Map::BottomMax(const sf::IntRect &Rect, float Max) const
  * @param Max the max going to the left
  * @return the maximm number of pixel Mario can go to the left
  */
-float Map::LeftMax(const sf::IntRect &Rect, float Max) const
+float Map::LeftMax(const sf::Sprite &Rect, float Max) const
 {
 	float NbPix = 0;
-	size_t Top    = Rect.Top    / Tile::GetDimensionY();
-	size_t Bottom = Rect.Bottom / Tile::GetDimensionY();
-	if(Top > myMaxY || Bottom > myMaxY)
-		return 0.f;
+	sf::Sprite Copy(Rect);
 	while(NbPix < Max)
 	{
 		++NbPix;
-		size_t Left = (Rect.Left - NbPix) / Tile::GetDimensionX();
-		if(Left > myMaxX)
-			return NbPix - 1;
-		for(size_t I = Top; I <= Bottom; ++I)
-			if((TileAtPos(Left, I).GetAttributes() & TileAttributes::Empty) != TileAttributes::Empty)
+		Copy.Move(-NbPix, 0);
+		for(std::vector<Tile>::const_iterator it(myTiles.begin()); it != myTiles.end(); ++it)
+			if(Collision::PixelTest(Copy, *it))
 				return NbPix - 1;
+		Copy.Move(NbPix, 0);
 	}
 	return Max;
 }
@@ -133,75 +122,20 @@ float Map::LeftMax(const sf::IntRect &Rect, float Max) const
  * @param Max the max going to the right
  * @return the maximm number of pixel Mario can go to the right
  */
-float Map::RightMax(const sf::IntRect &Rect, float Max) const
+float Map::RightMax(const sf::Sprite &Rect, float Max) const
 {
 	float NbPix = 0;
-	size_t Top    = Rect.Top    / Tile::GetDimensionY();
-	size_t Bottom = Rect.Bottom / Tile::GetDimensionY();
-	if(Top > myMaxY || Bottom > myMaxY)
-		return 0.f;
+	sf::Sprite Copy(Rect);
 	while(NbPix < Max)
 	{
 		++NbPix;
-		size_t Right = (Rect.Right + NbPix) / Tile::GetDimensionX();
-		if(Right > myMaxX)
-			return NbPix - 1;
-		for(size_t I = Top; I <= Bottom; ++I)
-			if((TileAtPos(Right, I).GetAttributes() & TileAttributes::Empty) != TileAttributes::Empty)
+		Copy.Move(NbPix, 0);
+		for(std::vector<Tile>::const_iterator it(myTiles.begin()); it != myTiles.end(); ++it)
+			if(Collision::PixelTest(Copy, *it))
 				return NbPix - 1;
+		Copy.Move(-NbPix, 0);
 	}
 	return Max;
-}
-
-/**
- * @param Rect the rectangle of the entity
- * @return true if it could go at least 1 pixel to the top
- */
-bool Map::CanGoTop(const sf::FloatRect &Rect) const
-{
-	return true;
-	return
-		Rect.Top > 0
-		&& TopIsFree(Rect.Left  / Tile::GetDimensionX(), Rect.Top / Tile::GetDimensionY())
-		&& TopIsFree(Rect.Right / Tile::GetDimensionX(), Rect.Top / Tile::GetDimensionY());
-}
-/**
- * @param Rect the rectangle of the entity
- * @return true if it could go at least 1 pixel to the bottom
- */
-bool Map::CanGoBottom(const sf::FloatRect &Rect) const
-{
-	return true;
-	return
-		Rect.Bottom < myMaxY * Tile::GetDimensionY()
-		&& BottomIsFree(Rect.Left  / Tile::GetDimensionX(), Rect.Top / Tile::GetDimensionY())
-		&& BottomIsFree(Rect.Right / Tile::GetDimensionX(), Rect.Top / Tile::GetDimensionY());
-}
-/**
- * @param Rect the rectangle of the entity
- * @return true if it could go at least 1 pixel to the left
- */
-bool Map::CanGoLeft(const sf::FloatRect &Rect) const
-{
-	return true;
-	return
-		Rect.Left > 0
-		&& LeftIsFree(Rect.Left / Tile::GetDimensionX(),  Rect.Top                /  Tile::GetDimensionY()     )
-		&& LeftIsFree(Rect.Left / Tile::GetDimensionX(), (Rect.Top + Rect.Bottom) / (Tile::GetDimensionY() * 2))
-		&& LeftIsFree(Rect.Left / Tile::GetDimensionX(),             Rect.Bottom  /  Tile::GetDimensionY()     );
-}
-/**
- * @param Rect the rectangle of the entity
- * @return true if it could go at least 1 pixel to the right
- */
-bool Map::CanGoRight(const sf::FloatRect &Rect) const
-{
-	return true;
-	return
-		Rect.Right < myMaxX * Tile::GetDimensionX()
-		&& RightIsFree(Rect.Right / Tile::GetDimensionX(),  Rect.Top                /  Tile::GetDimensionY()     )
-		&& RightIsFree(Rect.Right / Tile::GetDimensionX(), (Rect.Top + Rect.Bottom) / (Tile::GetDimensionY() * 2))
-		&& RightIsFree(Rect.Right / Tile::GetDimensionX(),             Rect.Bottom  /  Tile::GetDimensionY()     );
 }
 
 /**
@@ -212,8 +146,7 @@ bool Map::CanGoRight(const sf::FloatRect &Rect) const
  */
 void Map::Render(sf::RenderTarget &Target) const
 {
-	for(std::vector< std::vector< Tile > >::const_iterator it = myMap.begin(); it != myMap.end(); ++it)
-		for(std::vector< Tile >::const_iterator i = (*it).begin(); i != (*it).end(); ++i)
-			Target.Draw(*i);
+	for(std::vector<Tile>::const_iterator it = myTiles.begin(); it != myTiles.end(); ++it)
+		Target.Draw(*it);
 }
 

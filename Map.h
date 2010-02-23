@@ -26,7 +26,7 @@ class Map : public sf::Drawable
 		/**
 		 * It is the map : the double array of tiles.
 		 */
-		std::vector< std::vector< Tile > > myMap;
+		std::vector<Tile> myTiles;
 
 		/**
 		 * It is the position of Mario at its begin place
@@ -83,102 +83,40 @@ class Map : public sf::Drawable
 			{ return myMaxY; }
 
 		/**
-		 * @param X the position of the tile on the X axis
-		 * @param Y the position of the tile on the Y axis
-		 * @return the tile at the position (X;Y)
+		 * @return a vector of all the tiles
 		 */
-		Tile &TileAtPos(size_t X, size_t Y)
-			{ return myMap[Y][X]; }
+		std::vector<Tile> &Tiles()
+			{ return myTiles; }
 		/**
-		 * @param X the position of the tile on the X axis
-		 * @param Y the position of the tile on the Y axis
-		 * @return the tile at the position (X;Y)
+		 * @return a vector of all the tiles
 		 */
-		const Tile &TileAtPos(size_t X, size_t Y) const
-			{ return myMap[Y][X]; }
+		const std::vector<Tile> &Tiles() const
+			{ return myTiles; }
 	
 		/**
 		 * @param Rect the bounding rect of the figure
 		 * @param Max the max going to the top
 		 * @return the maximm number of pixel Mario can go to the top
 		 */
-		float TopMax(const sf::IntRect &Rect, float Max) const;
+		float TopMax(const sf::Sprite &Rect, float Max) const;
 		/**
 		 * @param Rect the bounding rect of the figure
 		 * @param Max the max going to the bottom
 		 * @return the maximm number of pixel Mario can go to the bottom
 		 */
-		float BottomMax(const sf::IntRect &Rect, float Max) const;
+		float BottomMax(const sf::Sprite &Rect, float Max) const;
 		/**
 		 * @param Rect the bounding rect of the figure
 		 * @param Max the max going to the left
 		 * @return the maximm number of pixel Mario can go to the left
 		 */
-		float LeftMax(const sf::IntRect &Rect, float Max) const;
+		float LeftMax(const sf::Sprite &Rect, float Max) const;
 		/**
 		 * @param Rect the bounding rect of the figure
 		 * @param Max the max going to the right
 		 * @return the maximm number of pixel Mario can go to the right
 		 */
-		float RightMax(const sf::IntRect &Rect, float Max) const;
-
-		/**
-		 * @param X the X position of the tile to test
-		 * @param Y the Y position of the tile to test
-		 * @return true if the tile is empty
-		 */
-		bool IsFree(size_t X, size_t Y) const
-			{ return (TileAtPos(X, Y).GetAttributes() & TileAttributes::Empty) == TileAttributes::Empty; }
-
-		/**
-		 * @param X the X coordinate of the tile to know if the tile on its top it is free
-		 * @param Y the Y coordinate of the tile to know if the tile on its top it is free
-		 * @return true if the tile on its top is free
-		 */
-		bool TopIsFree(size_t X, size_t Y) const
-			{ return Y > 0 && IsFree(X, Y - 1); }
-		/**
-		 * @param X the X coordinate of the tile to know if the tile on its bottom it is free
-		 * @param Y the Y coordinate of the tile to know if the tile on its bottom it is free
-		 * @return true if the tile on its bottom is free
-		 */
-		bool BottomIsFree(size_t X, size_t Y) const
-			{ return Y < myMaxY && IsFree(X, Y + 1); }
-		/**
-		 * @param X the X coordinate of the tile to know if the tile on its left it is free
-		 * @param Y the Y coordinate of the tile to know if the tile on its left it is free
-		 * @return true if the tile on its left is free
-		 */
-		bool LeftIsFree(size_t X, size_t Y) const
-			{ return X > 0 && IsFree(X - 1, Y); }
-		/**
-		 * @param X the X coordinate of the tile to know if the tile on its right it is free
-		 * @param Y the Y coordinate of the tile to know if the tile on its right it is free
-		 * @return true if the tile on its right is free
-		 */
-		bool RightIsFree(size_t X, size_t Y) const
-			{ return X < myMaxX && IsFree(X + 1, Y); }
-
-		/**
-		 * @param Rect the rectangle of the entity
-		 * @return true if it could go at least 1 pixel to the top
-		 */
-		bool CanGoTop(const sf::FloatRect &Rect) const;
-		/**
-		 * @param Rect the rectangle of the entity
-		 * @return true if it could go at least 1 pixel to the bottom
-		 */
-		bool CanGoBottom(const sf::FloatRect &Rect) const;
-		/**
-		 * @param Rect the rectangle of the entity
-		 * @return true if it could go at least 1 pixel to the left
-		 */
-		bool CanGoLeft(const sf::FloatRect &Rect) const;
-		/**
-		 * @param Rect the rectangle of the entity
-		 * @return true if it could go at least 1 pixel to the right
-		 */
-		bool CanGoRight(const sf::FloatRect &Rect) const;
+		float RightMax(const sf::Sprite &Rect, float Max) const;
 };
 
 #endif // MAP_INCLUDED

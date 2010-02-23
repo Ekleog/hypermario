@@ -10,13 +10,14 @@
 #include "Map.h"
 #include "Tile.h"
 #include "ImageManager.h"
+#include "config.h"
 
 /**
  * This class models a Mario, the hero of Hypermario.
  *
  * @author Lenoa
  */
-class Mario : public sf::Drawable
+class Mario : public sf::Sprite
 {
 	public:
 		/**
@@ -46,21 +47,9 @@ class Mario : public sf::Drawable
 		const Map *myMap;
 
 		/**
-		 * The sprite to blit when we want to blit Mario
-		 */
-		sf::Sprite mySprite;
-
-		/**
 		 * The actual size of Mario
 		 */
 		Size mySize;
-
-		/**
-		 * It renders the mario to the target
-		 *
-		 * @param Target the target on which render
-		 */
-		void Render(sf::RenderTarget &Target) const;
 
 	public:
 		/**
@@ -69,20 +58,12 @@ class Mario : public sf::Drawable
 		 * @param map the map on which Mario is evoluting
 		 */
 		Mario(size_t PosX, size_t PosY, const Map &map)
-			: myIsGoingLeft(false), myIsGoingRight(false)
+			: sf::Sprite()
+			  , myIsGoingLeft(false), myIsGoingRight(false)
 			  , mySpeedY(0)
-			  , myMap(&map), mySprite(ImageManager::Get("images/mario.png"))
+			  , myMap(&map)
 			  , mySize(Medium)
-		{ mySprite.SetPosition(PosX * Tile::GetDimensionX(), (PosY - 1) * Tile::GetDimensionY()); }
-
-		/**
-		 * @return true if Mario can go to the left, false otherwise
-		 */
-		bool CanGoLeft() const;
-		/**
-		 * @return true if Mario can go to the right, false otherwise
-		 */
-		bool CanGoRight() const;
+		{ SetPosition(PosX * TILES_WIDTH, (PosY - 1) * TILES_HEIGHT); }
 
 		/**
 		 * Mario goes to the right

@@ -20,40 +20,11 @@ class Tile : public sf::Sprite
 {
 	private:
 		/**
-		 * The width and height of all the tiles.
-		 *
-		 * It is static as far as each tile should have the same width and height. It is used to calculate
-		 * the coordinates of the tiles.
-		 */
-		static float ourWidth, ourHeight;
-
-		/**
 		 * The attributes of the tile
 		 */
 		unsigned char myAttributes;
 
 	public:
-		/**
-		 * This function is used to edit the dimensions of the tiles. <i>It should be called at the beginning
-		 * of your program and never after.</i>
-		 *
-		 * @param Width the new width of the tiles
-		 * @param Height the new height of the tiles
-		 */
-		static void SetTilesDimensions(float Width, float Height)
-			{ ourWidth = Width; ourHeight = Height; }
-
-		/**
-		 * @return tiles' width
-		 */
-		static float GetDimensionX()
-			{ return ourWidth; }
-		/**
-		 * @return tiles' height
-		 */
-		static float GetDimensionY()
-			{ return ourHeight; }
-
 		/**
 		 * @param Image the tile's image's associated filename
 		 * @param Attributes the tile's attributes
@@ -61,44 +32,20 @@ class Tile : public sf::Sprite
 		 * @param PosY the position on the Y axis of the tile
 		 */
 		Tile(const std::string &Image, unsigned char Attributes, float PosX, float PosY)
-			: sf::Sprite(ImageManager::Get(Image), sf::Vector2f(PosX * ourWidth, PosY * ourHeight))
+			: sf::Sprite(ImageManager::Get(Image), sf::Vector2f(PosX, PosY))
 			, myAttributes(Attributes)
 		{}
-
-		/**
-		 * @param PosX the new position of the tile on the X axis
-		 * @param PosY the new position of the tile on the Y axis
-		 */
-		void SetPosition(float X, float Y)
-			{ sf::Drawable::SetPosition(X * ourWidth, Y * ourHeight); }
-
-		/**
-		 * @param X the new position of the tile on the X axis
-		 */
-		void SetX(float X)
-			{ sf::Drawable::SetX(X * ourWidth); }
-		/**
-		 * @param Y the new position of the tile on the Y axis
-		 */
-		void SetY(float Y)
-			{ sf::Drawable::SetY(Y * ourHeight); }
-
-		/**
-		 * @return the position on the X axis
-		 */
-		float GetX() const
-			{ return sf::Drawable::GetPosition().x / ourWidth; }
-		/**
-		 * @return the position on the Y axis
-		 */
-		float GetY() const
-			{ return sf::Drawable::GetPosition().y / ourHeight; }
 
 		/**
 		 * @return the attributes of the tile
 		 */
 		unsigned char GetAttributes() const
 			{ return myAttributes; }
+		/**
+		 * @param Attributes the new attributes of the tile
+		 */
+		void SetAttributes(unsigned char Attributes)
+			{ myAttributes = Attributes; }
 };
 
 #endif // TILE_INCLUDED

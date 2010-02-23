@@ -16,6 +16,16 @@
 #define WINDOW_WIDTH 320
 
 /**
+ * The width of the tiles
+ */
+#define TILES_WIDTH 32
+
+/**
+ * The height of the tiles
+ */
+#define TILES_HEIGHT 32
+
+/**
  * The gravitation constant
  */
 #define GRAVITATION 0.08

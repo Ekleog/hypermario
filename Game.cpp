@@ -41,13 +41,11 @@ void Game::Run()
 							return;
 						
 						case sf::Key::Left:
-							if(mario.CanGoLeft())
-								mario.GoLeft();
+							mario.GoLeft();
 							break;
 
 						case sf::Key::Right:
-							if(mario.CanGoRight())
-								mario.GoRight();
+							mario.GoRight();
 							break;
 
 						case sf::Key::Up:
