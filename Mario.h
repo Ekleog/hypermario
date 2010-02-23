@@ -58,7 +58,7 @@ class Mario : public sf::Sprite
 		 * @param map the map on which Mario is evoluting
 		 */
 		Mario(size_t PosX, size_t PosY, const Map &map)
-			: sf::Sprite()
+			: sf::Sprite(ImageManager::Get("images/mario.png"))
 			  , myIsGoingLeft(false), myIsGoingRight(false)
 			  , mySpeedY(0)
 			  , myMap(&map)

@@ -41,7 +41,11 @@ bool Collision::PixelTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2, sf::Ui
 			sf::Vector2f Obj1Pix = Obj1.TransformToLocal(sf::Vector2f(I, J));
 			sf::Vector2f Obj2Pix = Obj2.TransformToLocal(sf::Vector2f(I, J));
 
-			if(Obj1.GetPixel(static_cast<int>(Obj1Pix.x), static_cast<int>(Obj1Pix.y)).a > AlphaLimit
+			if(Obj1Pix.x >= 0 && Obj1Pix.x < Obj1BoundingBox.GetWidth()
+			&& Obj1Pix.y >= 0 && Obj1Pix.y < Obj1BoundingBox.GetHeight()
+			&& Obj2Pix.x >= 0 && Obj2Pix.x < Obj2BoundingBox.GetWidth()
+			&& Obj2Pix.y >= 0 && Obj2Pix.y < Obj2BoundingBox.GetHeight()
+			&& Obj1.GetPixel(static_cast<int>(Obj1Pix.x), static_cast<int>(Obj1Pix.y)).a > AlphaLimit
 			&& Obj2.GetPixel(static_cast<int>(Obj2Pix.x), static_cast<int>(Obj2Pix.y)).a > AlphaLimit)
 				return true;
 		}
