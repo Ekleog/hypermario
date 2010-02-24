@@ -21,15 +21,19 @@ bool Collision::BoundingBoxTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2)
  * @return true if the two sprites are in collision (via a pixel-perfect method)
  * @author Lenoa
  */
+#include <iostream>
 bool Collision::PixelTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2, sf::Uint8 AlphaLimit)
 {
 	sf::IntRect Obj1BoundingBox(GetBoundingBox(Obj1));
 	sf::IntRect Obj2BoundingBox(GetBoundingBox(Obj2));
+	std::cout << "Obj1BoundingBox = " << Obj1BoundingBox.Left << " ; " << Obj1BoundingBox.Top << " ; " << Obj1BoundingBox.Right << " ; " << Obj1BoundingBox.Bottom << std::endl;
+	std::cout << "Obj2BoundingBox = " << Obj2BoundingBox.Left << " ; " << Obj2BoundingBox.Top << " ; " << Obj2BoundingBox.Right << " ; " << Obj2BoundingBox.Bottom << std::endl;
 
 	sf::IntRect Intersection;
 
 	if(!Obj1BoundingBox.Intersects(Obj2BoundingBox, &Intersection))
 		return false;
+	std::cout << "Intersection = " << Intersection.Left << " ; " << Intersection.Top << " ; " << Intersection.Right << " ; " << Intersection.Bottom << std::endl;
 
 	if(AlphaLimit == 0)
 		return true;
@@ -38,15 +42,15 @@ bool Collision::PixelTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2, sf::Ui
 	{
 		for(int J = Intersection.Top; J <= Intersection.Bottom; ++J)
 		{
-			sf::Vector2f Obj1Pix = Obj1.TransformToLocal(sf::Vector2f(I, J));
-			sf::Vector2f Obj2Pix = Obj2.TransformToLocal(sf::Vector2f(I, J));
+			sf::Vector2i Obj1Pix(I - Obj1BoundingBox.Left, J - Obj1BoundingBox.Top);
+			sf::Vector2i Obj2Pix(I - Obj2BoundingBox.Left, J - Obj2BoundingBox.Top);
 
 			if(Obj1Pix.x >= 0 && Obj1Pix.x < Obj1BoundingBox.GetWidth()
 			&& Obj1Pix.y >= 0 && Obj1Pix.y < Obj1BoundingBox.GetHeight()
 			&& Obj2Pix.x >= 0 && Obj2Pix.x < Obj2BoundingBox.GetWidth()
 			&& Obj2Pix.y >= 0 && Obj2Pix.y < Obj2BoundingBox.GetHeight()
-			&& Obj1.GetPixel(static_cast<int>(Obj1Pix.x), static_cast<int>(Obj1Pix.y)).a > AlphaLimit
-			&& Obj2.GetPixel(static_cast<int>(Obj2Pix.x), static_cast<int>(Obj2Pix.y)).a > AlphaLimit)
+			&& Obj1.GetPixel(Obj1Pix.x, Obj1Pix.y).a > AlphaLimit
+			&& Obj2.GetPixel(Obj2Pix.x, Obj2Pix.y).a > AlphaLimit)
 				return true;
 		}
 	}
@@ -61,14 +65,13 @@ bool Collision::PixelTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2, sf::Ui
  */
 sf::IntRect Collision::GetBoundingBox(const sf::Sprite &Obj)
 {
-	sf::Vector2f Position = Obj.TransformToGlobal(sf::Vector2f(Obj.GetSubRect().Left, Obj.GetSubRect().Top)); // Position of the top left corner
-	sf::Vector2f Size     = sf::Vector2f(Obj.GetSubRect().GetWidth(), Obj.GetSubRect().GetHeight()); // Size of the object
-	
+	const sf::Vector2f &Position(Obj.GetPosition());
+	const sf::IntRect  &SubRect(Obj.GetSubRect());
 	return sf::IntRect(
-			static_cast<int>(Position.x),
-			static_cast<int>(Position.y),
-			static_cast<int>(Position.x + Size.x),
-			static_cast<int>(Position.y + Size.y)
-	);
+			Position.x,
+			Position.y,
+			Position.x + SubRect.GetWidth(),
+			Position.y + SubRect.GetHeight()
+			);
 }
 

@@ -16,12 +16,23 @@
  * @return 0 if success ; 1 otherwise
  * @author Lenoa
  */
+#include "Collision.h"
 int main(int, char**)
 {
-	sf::RenderWindow Window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Test of Tile");
+	//*
+	sf::Image A, B;
+	A.LoadFromFile("images/mario.png");
+	B.LoadFromFile("images/wall.bmp");
+	sf::Sprite C(A), D(B);
+	sf::IntRect SubRect(32, 0, 64, 64);
+	C.SetSubRect(SubRect);
+	std::cout << Collision::PixelTest(A, B) << std::endl;
+	/*/
+	sf::RenderWindow Window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "HyperMario");
 	Map map("maps/1.map", "maps/correspondance.table");
 	Game game(Window, map);
 	game.Run();
 	return 0;
+	// */
 }
 
