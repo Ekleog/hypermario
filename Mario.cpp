@@ -22,12 +22,17 @@ void Mario::Update()
 	// Compute Y move
 	mySpeedY += GRAVITATION;
 	if(mySpeedY < 0)
+	{
 		Move(0, -myMap->   TopMax(*this, -mySpeedY));
+	}
 	else if(mySpeedY > 0)
 	{
 		float i = myMap->BottomMax(*this, mySpeedY);
 		if(i == 0)
+		{
 			mySpeedY = 0;
+			myIsJumping = false;
+		}
 		else if(i < 0)
 		{
 			while(mySpeedY >= 1) --mySpeedY;
@@ -43,6 +48,23 @@ void Mario::Update()
 		Move(-myMap->LeftMax(*this, 2), 0);
 	else if(myIsGoingRight && !myIsGoingLeft)
 		Move(+myMap->RightMax(*this, 2), 0);
+
+
+	if(myIsJumping)
+	{
+		myState = Jumping;
+	}
+	else if(myIsGoingLeft || myIsGoingRight)
+	{
+		if((myState+=0.3) > Walking + 2)
+			myState = Walking;
+	}
+	else
+	{
+		myState = Standing;
+	}
+
+	ChangeSprite(myState);
 }
 
 /**
