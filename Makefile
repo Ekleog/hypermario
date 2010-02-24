@@ -28,13 +28,13 @@ endif
 corres_gen: main_corres_gen.o
 	$(CXX) main_corres_gen.o -o corres_gen
 
-Collision.cpp: Collision.h
-Game.o: Game.h Mario.h Map.h Tile.h TileAttributes.h ImageManager.h
-ImageManager.o: ImageManager.h Exception_ImageNotLoaded.h Exception.h
-main.o: Tile.h Map.h Mario.h TileAttributes.h ImageManager.h
-main_corres_gen.o: TileAttributes.h
-Map.o: Map.h Tile.h TileAttributes.h Mario.h ImageManager.h
-Mario.o: Mario.h TileAttributes.h Map.h Collision.h
+/home/lenoa/programmes/hypermario/Map.o: Collision.h ImageManager.h Map.h Tile.h TileAttributes.h config.h
+/home/lenoa/programmes/hypermario/Game.o: Game.h ImageManager.h Map.h Mario.h Tile.h TileAttributes.h config.h
+/home/lenoa/programmes/hypermario/ImageManager.o: Exception.h Exception_ImageNotLoaded.h ImageManager.h
+/home/lenoa/programmes/hypermario/main_corres_gen.o: TileAttributes.h
+/home/lenoa/programmes/hypermario/main.o: Game.h ImageManager.h Map.h Tile.h TileAttributes.h config.h
+/home/lenoa/programmes/hypermario/Collision.o: Collision.h
+/home/lenoa/programmes/hypermario/Mario.o: Collision.h ImageManager.h Map.h Mario.h Tile.h TileAttributes.h config.h
 
 $(EXEC): Collision.o Game.o ImageManager.o main.o Map.o Mario.o
 	$(CXX) Collision.o Game.o ImageManager.o main.o Map.o Mario.o -o $(EXEC) $(LDFLAGS)
