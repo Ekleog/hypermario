@@ -21,7 +21,7 @@ class Mario : public sf::Sprite
 {
 	public:
 		/**
-		 * IT enumerates the possible sizes of Mario
+		 * It enumerates the possible sizes of Mario
 		 */
 		enum Size
 		{
@@ -30,6 +30,9 @@ class Mario : public sf::Sprite
 			Giant
 		};
 
+		/**
+		 * It enumerates the states of Mario
+		 */
 		enum State
 		{
 			Standing	= 0,
@@ -79,17 +82,19 @@ class Mario : public sf::Sprite
 			  , myState(Standing)
 		{
 			SetPosition(PosX * TILES_WIDTH, (PosY - 1) * TILES_HEIGHT);
+			SetSubRect(sf::IntRect(0, 0, GetSubRect().GetWidth() / 6, GetSubRect().GetHeight()));
 			ChangeSprite(myState);
 		}
 
 		/**
-		 * Change sprite to sprite number ii of spritesheet
+		 * @param Number the number of the sprite to use now in the spritesheet
 		 */
-		void ChangeSprite(float ii)
+		void ChangeSprite(float Number)
 		{
-			int width = 32;
-			int i = ii < 0 ? 0 : int(ii);
-				SetSubRect(sf::IntRect(i*width, 0, (i+1)*width, 2*width));
+			int I = Number < 0 ? 0 : static_cast<int>(Number);
+			int Width = GetSubRect().GetWidth();
+			int Height = GetSubRect().GetHeight();
+			SetSubRect(sf::IntRect(I * Width, 0, (I + 1) * Width, Height));
 		}
 		/**
 		 * Mario goes to the right
@@ -130,11 +135,11 @@ class Mario : public sf::Sprite
 		 */
 		void Jump()
 		{
-			myState = Jumping;
 			if(!myIsJumping)
 			{
 				mySpeedY = -4.;
 				myIsJumping = true;
+				myState = Jumping;
 			}
 		}
 

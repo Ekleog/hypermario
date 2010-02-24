@@ -21,6 +21,7 @@ bool Collision::BoundingBoxTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2)
  * @return true if the two sprites are in collision (via a pixel-perfect method)
  * @author Lenoa
  */
+#include <iostream>
 bool Collision::PixelTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2, sf::Uint8 AlphaLimit)
 {
 	sf::IntRect Obj1BoundingBox(GetBoundingBox(Obj1));
@@ -61,8 +62,8 @@ bool Collision::PixelTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2, sf::Ui
  */
 sf::IntRect Collision::GetBoundingBox(const sf::Sprite &Obj)
 {
-	sf::Vector2f Position = Obj.TransformToGlobal(sf::Vector2f(0, 0)); // Position of the top left corner
-	sf::Vector2f Size     = Obj.GetSize(); // Size of the object
+	sf::Vector2f Position = Obj.TransformToGlobal(sf::Vector2f(Obj.GetSubRect().Left, Obj.GetSubRect().Top)); // Position of the top left corner
+	sf::Vector2f Size     = sf::Vector2f(Obj.GetSubRect().GetWidth(), Obj.GetSubRect().GetHeight()); // Size of the object
 	
 	return sf::IntRect(
 			static_cast<int>(Position.x),
