@@ -21,19 +21,15 @@ bool Collision::BoundingBoxTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2)
  * @return true if the two sprites are in collision (via a pixel-perfect method)
  * @author Lenoa
  */
-#include <iostream>
 bool Collision::PixelTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2, sf::Uint8 AlphaLimit)
 {
 	sf::IntRect Obj1BoundingBox(GetBoundingBox(Obj1));
 	sf::IntRect Obj2BoundingBox(GetBoundingBox(Obj2));
-	std::cout << "Obj1BoundingBox = " << Obj1BoundingBox.Left << " ; " << Obj1BoundingBox.Top << " ; " << Obj1BoundingBox.Right << " ; " << Obj1BoundingBox.Bottom << std::endl;
-	std::cout << "Obj2BoundingBox = " << Obj2BoundingBox.Left << " ; " << Obj2BoundingBox.Top << " ; " << Obj2BoundingBox.Right << " ; " << Obj2BoundingBox.Bottom << std::endl;
 
 	sf::IntRect Intersection;
 
 	if(!Obj1BoundingBox.Intersects(Obj2BoundingBox, &Intersection))
 		return false;
-	std::cout << "Intersection = " << Intersection.Left << " ; " << Intersection.Top << " ; " << Intersection.Right << " ; " << Intersection.Bottom << std::endl;
 
 	if(AlphaLimit == 0)
 		return true;
