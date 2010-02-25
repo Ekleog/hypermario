@@ -16,6 +16,11 @@
 #define WINDOW_WIDTH 320
 
 /**
+ * The background color
+ */
+#define BACKGROUND_COLOR sf::Color(212, 234, 255)
+
+/**
  * The width of the tiles
  */
 #define TILES_WIDTH 32

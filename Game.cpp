@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Mario.h"
+#include "config.h"
 
 /**
  * The method to call to make the game play
@@ -84,7 +85,7 @@ void Game::Run()
 		myWindow->SetView(mario.GetView());
 		
 		// Redraw the screen
-		myWindow->Clear();
+		myWindow->Clear(BACKGROUND_COLOR);
 		myWindow->Draw(*myMap);
 		myWindow->Draw(mario);
 		myWindow->Display();
