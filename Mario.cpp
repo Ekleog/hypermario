@@ -23,20 +23,17 @@ void Mario::Update()
 	mySpeedY += GRAVITATION;
 	if(mySpeedY < 0)
 	{
-		Move(0, -myMap->TopMax(*this, -mySpeedY));
+		float i = myMap->TopMax(*this, -mySpeedY);
+		if(i == 0)
+			mySpeedY = 0;
+		else
+			Move(0, -i);
 	}
 	else if(mySpeedY > 0)
 	{
 		float i = myMap->BottomMax(*this, mySpeedY);
 		if(i == 0)
 		{
-			mySpeedY = 0;
-			myIsJumping = false;
-		}
-		else if(i < 0)
-		{
-			while(mySpeedY >= 1) --mySpeedY;
-			Move(0, mySpeedY);
 			mySpeedY = 0;
 			myIsJumping = false;
 		}
