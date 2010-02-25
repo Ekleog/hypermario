@@ -1,4 +1,6 @@
 ## @author Lenoa
 
+- Lose if Mario goes out of the screen (at its bottom)
+- Add a system of lifes
 - Add a system of monsters
 - Add collisions monsters-mario
