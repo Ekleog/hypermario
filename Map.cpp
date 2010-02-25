@@ -35,7 +35,7 @@ void Map::Reload(const std::string &File, const std::string &Table)
 	table.close();
 
 	// Loading the map itself from the file
-	size_t y = 0, x = 0;
+	size_t y = 0, x;
 	std::ifstream file(File.c_str(), std::ios::in | std::ios::binary);
 	while(std::getline(file, s))
 	{
@@ -72,7 +72,7 @@ float Map::TopMax(const sf::Sprite &Rect, float Max) const
 		Copy.Move(0, -NbPix);
 		for(std::vector<Tile>::const_iterator it(myTiles.begin()); it != myTiles.end(); ++it)
 			if(it->GetAttributes() != TileAttributes::Empty)
-				if(Collision::PixelTest(Copy, *it))
+				if(Collision::BoundingBoxTest(Copy, *it))
 					return NbPix - 1;
 
 		Copy.Move(0, NbPix);
@@ -94,7 +94,7 @@ float Map::BottomMax(const sf::Sprite &Rect, float Max) const
 		Copy.Move(0, NbPix);
 		for(std::vector<Tile>::const_iterator it(myTiles.begin()); it != myTiles.end(); ++it)
 			if(it->GetAttributes() != TileAttributes::Empty)
-				if(Collision::PixelTest(Copy, *it))
+				if(Collision::BoundingBoxTest(Copy, *it))
 					return NbPix - 1;
 
 		Copy.Move(0, -NbPix);
@@ -116,7 +116,7 @@ float Map::LeftMax(const sf::Sprite &Rect, float Max) const
 		Copy.Move(-NbPix, 0);
 		for(std::vector<Tile>::const_iterator it(myTiles.begin()); it != myTiles.end(); ++it)
 			if(it->GetAttributes() != TileAttributes::Empty)
-				if(Collision::PixelTest(Copy, *it))
+				if(Collision::BoundingBoxTest(Copy, *it))
 					return NbPix - 1;
 
 		Copy.Move(NbPix, 0);
@@ -138,7 +138,7 @@ float Map::RightMax(const sf::Sprite &Rect, float Max) const
 		Copy.Move(NbPix, 0);
 		for(std::vector<Tile>::const_iterator it(myTiles.begin()); it != myTiles.end(); ++it)
 			if(it->GetAttributes() != TileAttributes::Empty)
-				if(Collision::PixelTest(Copy, *it))
+				if(Collision::BoundingBoxTest(Copy, *it))
 					return NbPix - 1;
 
 		Copy.Move(-NbPix, 0);

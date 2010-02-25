@@ -28,8 +28,6 @@ bool Collision::PixelTest(const sf::Sprite &Obj1, const sf::Sprite &Obj2, sf::Ui
 
 	sf::IntRect Intersection;
 
-	return BoundingBoxTest(Obj1, Obj2);
-
 	if(!Obj1BoundingBox.Intersects(Obj2BoundingBox, &Intersection))
 		return false;
 
@@ -66,10 +64,10 @@ sf::IntRect Collision::GetBoundingBox(const sf::Sprite &Obj)
 	const sf::Vector2f &Position(Obj.GetPosition());
 	const sf::IntRect  &SubRect(Obj.GetSubRect());
 	return sf::IntRect(
-				(int)Position.x,
-				(int)Position.y,
-				(int)Position.x + SubRect.GetWidth(),
-				(int)Position.y + SubRect.GetHeight()
+				Position.x,
+				Position.y,
+				Position.x + SubRect.GetWidth(),
+				Position.y + SubRect.GetHeight()
 			);
 }
 
