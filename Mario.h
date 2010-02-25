@@ -137,7 +137,7 @@ class Mario : public sf::Sprite
 		{
 			if(!myIsJumping)
 			{
-				mySpeedY = -4.;
+				mySpeedY = -6.;//-4.;
 				myIsJumping = true;
 				myState = Jumping;
 			}
