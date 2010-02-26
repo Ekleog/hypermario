@@ -43,9 +43,9 @@ class Mario : public sf::Sprite
 
 	private:
 		/**
-		 * Is mario moving left, right, jumping or not ?
+		 * Is mario moving left, right, jumping, running or not ?
 		 */
-		bool myIsGoingLeft, myIsGoingRight, myIsJumping;
+		bool myIsGoingLeft, myIsGoingRight, myIsJumping, myIsRunning;
 
 		/**
 		 * The speed of Mario on the Y axis (inverted, as required by SFML)
@@ -135,13 +135,24 @@ class Mario : public sf::Sprite
 		 */
 		void Jump()
 		{
-			if(!myIsJumping)
+			if(myMap->BottomMax(*this, 1) == 0)
 			{
 				mySpeedY = -6.;
 				myIsJumping = true;
 				myState = Jumping;
 			}
 		}
+
+		/**
+		 * Mario starts running
+		 */
+		void Run()
+			{ myIsRunning = true; }
+		/**
+		 * Mario stops running
+		 */
+		void StopRunning()
+			{ myIsRunning = false; }
 
 		/**
 		 * It updates the Mario

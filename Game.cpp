@@ -53,6 +53,10 @@ void Game::Run()
 							mario.Jump();
 							break;
 
+						case sf::Key::A:
+							mario.Run();
+							break;
+
 						default:
 							break;
 					}
@@ -67,6 +71,10 @@ void Game::Run()
 
 						case sf::Key::Right:
 							mario.StopGoingRight();
+							break;
+
+						case sf::Key::A:
+							mario.StopRunning();
 							break;
 
 						default:

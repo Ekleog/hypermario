@@ -42,10 +42,20 @@ void Mario::Update()
 	}
 
 	// Compute X move
-	if(myIsGoingLeft && !myIsGoingRight)
-		Move(-myMap->LeftMax(*this, 1.7), 0);
-	else if(myIsGoingRight && !myIsGoingLeft)
-		Move(+myMap->RightMax(*this, 1.7), 0);
+	if(myIsRunning)
+	{
+		if(myIsGoingLeft && !myIsGoingRight)
+			Move(-myMap->LeftMax(*this, 4), 0);
+		else if(myIsGoingRight && !myIsGoingLeft)
+			Move(+myMap->RightMax(*this, 4), 0);
+	}
+	else
+	{
+		if(myIsGoingLeft && !myIsGoingRight)
+			Move(-myMap->LeftMax(*this, 1.7), 0);
+		else if(myIsGoingRight && !myIsGoingLeft)
+			Move(+myMap->RightMax(*this, 1.7), 0);
+	}
 
 	// Compute state
 	if(myIsJumping)
@@ -54,8 +64,16 @@ void Mario::Update()
 	}
 	else if(myIsGoingLeft || myIsGoingRight)
 	{
-		if((myState += 0.15) > Walking + 2)
-			myState = Walking;
+		if(myIsRunning)
+		{
+			if((myState += 0.30) > Walking + 2)
+				myState = Walking;
+		}
+		else
+		{
+			if((myState += 0.15) > Walking + 2)
+				myState = Walking;
+		}
 	}
 	else
 	{
