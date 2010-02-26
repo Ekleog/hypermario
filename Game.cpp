@@ -17,7 +17,7 @@
 void Game::Run()
 {
 	// Set the frame rate
-	myWindow->SetFramerateLimit(26);
+	myWindow->SetFramerateLimit(40);
 
 	// Initialise the Mario
 	Mario mario = Mario(myMap->GetMarioPosX(), myMap->GetMarioPosY(), *myMap);

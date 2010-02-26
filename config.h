@@ -33,7 +33,7 @@
 /**
  * The gravitation constant
  */
-#define GRAVITATION 0.18//0.08
+#define GRAVITATION 0.18
 
 #endif // CONFIG_INCLUDED
 
