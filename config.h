@@ -8,12 +8,12 @@
 /**
  * The height of the window
  */
-#define WINDOW_HEIGHT 320
+#define WINDOW_HEIGHT 480
 
 /**
  * The width of the window
  */
-#define WINDOW_WIDTH 320
+#define WINDOW_WIDTH 640
 
 /**
  * The background color
