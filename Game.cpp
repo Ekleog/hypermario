@@ -20,7 +20,7 @@ void Game::Run()
 	myWindow->SetFramerateLimit(40);
 
 	// Initialise the Mario
-	Mario mario = Mario(myMap->GetMarioPosX(), myMap->GetMarioPosY(), *myMap);
+	Mario mario = Mario(myMap->GetMarioPosX(), myMap->GetMarioPosY(), *myMap, 3);
 
 	// Main loop
 	bool Stop = false;
@@ -53,7 +53,7 @@ void Game::Run()
 							mario.Jump();
 							break;
 
-						case sf::Key::A:
+						case sf::Key::R:
 							mario.Run();
 							break;
 
@@ -73,7 +73,7 @@ void Game::Run()
 							mario.StopGoingRight();
 							break;
 
-						case sf::Key::A:
+						case sf::Key::R:
 							mario.StopRunning();
 							break;
 
@@ -88,6 +88,10 @@ void Game::Run()
 
 		// Update the map and all which is on it
 		mario.Update();
+
+		// If Mario lost, close
+		if(mario.Lost())
+			return;
 
 		// Update the view
 		myWindow->SetView(mario.GetView());

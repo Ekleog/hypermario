@@ -19,6 +19,10 @@
  */
 void Mario::Update()
 {
+	// Test if Mario is died
+	if(GetPosition().y > (myMap->GetMaxY() + 1) * TILES_HEIGHT)
+		Die();
+	
 	// Compute Y move
 	mySpeedY += GRAVITATION;
 	if(mySpeedY < 0)

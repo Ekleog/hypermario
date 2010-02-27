@@ -58,9 +58,24 @@ class Mario : public sf::Sprite
 		const Map *myMap;
 
 		/**
+		 * The position to return when Mario dies
+		 */
+		float myReturnPosX, myReturnPosY;
+
+		/**
 		 * The actual size of Mario
 		 */
 		Size mySize;
+
+		/**
+		 * The number of lifes of Mario
+		 */
+		sf::Uint16 myLifes;
+
+		/**
+		 * Mario lost the game ?
+		 */
+		bool myLost;
 
 		/**
 		 * The actual animation state of Mario
@@ -73,12 +88,15 @@ class Mario : public sf::Sprite
 		 * @param PosY the position of Mario on the Y axis
 		 * @param map the map on which Mario is evoluting
 		 */
-		Mario(size_t PosX, size_t PosY, const Map &map)
+		Mario(const size_t PosX, const size_t PosY, const Map &map, const sf::Uint16 Lifes)
 			: sf::Sprite(ImageManager::Get("images/mario.png"))
-			  , myIsGoingLeft(false), myIsGoingRight(false), myIsJumping(false)
+			  , myIsGoingLeft(false), myIsGoingRight(false), myIsJumping(false), myIsRunning(false)
 			  , mySpeedY(0)
 			  , myMap(&map)
+			  , myReturnPosX(PosX * TILES_WIDTH), myReturnPosY((PosY - 1) * TILES_HEIGHT)
 			  , mySize(Medium)
+			  , myLifes(Lifes)
+			  , myLost(false)
 			  , myState(Standing)
 		{
 			SetPosition(PosX * TILES_WIDTH, (PosY - 1) * TILES_HEIGHT);
@@ -93,9 +111,35 @@ class Mario : public sf::Sprite
 		{
 			int I = Number < 0 ? 0 : static_cast<int>(Number);
 			int Width = GetSubRect().GetWidth();
-			int Height = GetSubRect().GetHeight();
-			SetSubRect(sf::IntRect(I * Width, 0, (I + 1) * Width, Height));
+			SetSubRect(sf::IntRect(I * Width, 0, (I + 1) * Width, GetSubRect().GetHeight()));
 		}
+
+		/**
+		 * Sets the return position of Mario (if it dies).
+		 */
+		void SetReturnPos(float X, float Y)
+			{ myReturnPosX = X; myReturnPosY = Y; }
+
+		/**
+		 * Mario dies
+		 */
+		void Die()
+		{
+			if(myLifes <= 1)
+				myLost = true;
+			else
+			{
+				--myLifes;
+				SetPosition(myReturnPosX, myReturnPosY);
+			}
+		}
+
+		/**
+		 * Has Mario lost ?
+		 */
+		bool Lost() const
+			{ return myLost; }
+
 		/**
 		 * Mario goes to the right
 		 */
