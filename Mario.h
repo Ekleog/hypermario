@@ -5,8 +5,7 @@
 #ifndef MARIO_INCLUDED
 #define MARIO_INCLUDED 1
 
-#include <SFML/Graphics.hpp>
-
+#include "AnimatedSprite.h"
 #include "Map.h"
 #include "Tile.h"
 #include "ImageManager.h"
@@ -17,29 +16,9 @@
  *
  * @author Lenoa
  */
-class Mario : public sf::Sprite
+class Mario : public AnimatedSprite
 {
 	public:
-		/**
-		 * It enumerates the possible sizes of Mario
-		 */
-		enum Size
-		{
-			Little,
-			Medium,
-			Giant
-		};
-
-		/**
-		 * It enumerates the states of Mario
-		 */
-		enum State
-		{
-			Standing	= 0,
-			Walking		= 1,
-			Turning		= 4,
-			Jumping		= 5
-		};
 
 	private:
 		/**
@@ -65,7 +44,7 @@ class Mario : public sf::Sprite
 		/**
 		 * The actual size of Mario
 		 */
-		Size mySize;
+		std::string mySize;
 
 		/**
 		 * The number of lifes of Mario
@@ -80,7 +59,7 @@ class Mario : public sf::Sprite
 		/**
 		 * The actual animation state of Mario
 		 */
-		float myState;
+		std::string myState;
 
 	public:
 		/**
@@ -89,29 +68,39 @@ class Mario : public sf::Sprite
 		 * @param map the map on which Mario is evoluting
 		 */
 		Mario(const size_t PosX, const size_t PosY, const Map &map, const sf::Uint16 Lifes)
-			: sf::Sprite(ImageManager::Get("images/mario.png"))
-			  , myIsGoingLeft(false), myIsGoingRight(false), myIsJumping(false), myIsRunning(false)
+			: myIsGoingLeft(false), myIsGoingRight(false), myIsJumping(false), myIsRunning(false)
 			  , mySpeedY(0)
 			  , myMap(&map)
 			  , myReturnPosX(PosX * TILES_WIDTH), myReturnPosY((PosY - 1) * TILES_HEIGHT)
-			  , mySize(Medium)
+			  , mySize("small")
 			  , myLifes(Lifes)
 			  , myLost(false)
-			  , myState(Standing)
+			  , myState("stand")
+			, AnimatedSprite(std::string("images/mario!.png\n"
+					"default 1\n"
+					"small.stand 1\n"
+					"small.walk 3\n"
+					"small.turn 1\n"
+					"small.jump 1\n"
+					"small.swim 4\n"
+					"tall.stand 1\n"
+					"tall.walk 3\n"
+					"tall.turn 1\n"
+					"tall.jump 1\n"
+					"tall.crouch 1\n"
+					"tall.swim 6\n"
+					"tall.unknown 8\n"
+					"fire.stand 1\n"
+					"fire.walk 3\n"
+					"fire.fire 1\n"
+					"fire.turn 1\n"
+					"fire.jump 1\n"
+					"fire.crouch 1\n"
+					"fire.swim 6\n"
+					"fire.unknown 8"))
 		{
 			SetPosition(PosX * TILES_WIDTH, (PosY - 1) * TILES_HEIGHT);
-			SetSubRect(sf::IntRect(0, 0, GetSubRect().GetWidth() / 6, GetSubRect().GetHeight()));
-			ChangeSprite(myState);
-		}
-
-		/**
-		 * @param Number the number of the sprite to use now in the spritesheet
-		 */
-		void ChangeSprite(float Number)
-		{
-			int I = Number < 0 ? 0 : static_cast<int>(Number);
-			int Width = GetSubRect().GetWidth();
-			SetSubRect(sf::IntRect(I * Width, 0, (I + 1) * Width, GetSubRect().GetHeight()));
+			mySize = "fire";
 		}
 
 		/**
@@ -148,7 +137,7 @@ class Mario : public sf::Sprite
 			if(!myIsGoingRight)
 			{
 				myIsGoingRight = true;
-				FlipX(false); myState = Walking;
+				FlipX(false); myState = "walk";
 			}
 		}
 		/**
@@ -159,7 +148,7 @@ class Mario : public sf::Sprite
 			if(!myIsGoingLeft)
 			{
 				myIsGoingLeft = true;
-				FlipX(true); myState = Walking;
+				FlipX(true); myState = "walk";
 			}
 		}
 
@@ -167,12 +156,12 @@ class Mario : public sf::Sprite
 		 * Mario stops going to the left
 		 */
 		void StopGoingLeft()
-			{ myIsGoingLeft = false; myState = Standing; }
+			{ myIsGoingLeft = false; myState = "stand"; }
 		/**
 		 * Mario stops going to the right
 		 */
 		void StopGoingRight()
-			{ myIsGoingRight = false; myState = Standing; }
+			{ myIsGoingRight = false; myState = "stand"; }
 
 		/**
 		 * Makes Mario jumping
@@ -183,7 +172,7 @@ class Mario : public sf::Sprite
 			{
 				mySpeedY = -6.;
 				myIsJumping = true;
-				myState = Jumping;
+				myState = "jump";
 			}
 		}
 

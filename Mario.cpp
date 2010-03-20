@@ -11,7 +11,7 @@
 #include "Map.h"
 #include "Tile.h"
 #include "TileAttributes.h"
-
+#include <iostream>
 /**
  * It updates the Mario
  *
@@ -19,10 +19,10 @@
  */
 void Mario::Update()
 {
+	AnimatedSprite::Update();
 	// Test if Mario is died
 	if(GetPosition().y > (myMap->GetMaxY() + 1) * TILES_HEIGHT)
 		Die();
-	
 	// Compute Y move
 	mySpeedY += GRAVITATION;
 	if(mySpeedY < 0)
@@ -44,7 +44,6 @@ void Mario::Update()
 		else
 			Move(0, i);
 	}
-
 	// Compute X move
 	if(myIsRunning)
 	{
@@ -60,30 +59,30 @@ void Mario::Update()
 		else if(myIsGoingRight && !myIsGoingLeft)
 			Move(+myMap->RightMax(*this, 1.7), 0);
 	}
-
 	// Compute state
 	if(myIsJumping)
 	{
-		myState = Jumping;
+		myState = "jump";
 	}
 	else if(myIsGoingLeft || myIsGoingRight)
 	{
+		myState = "walk";
 		if(myIsRunning)
-		{
-			if((myState += 0.30) > Walking + 2)
-				myState = Walking;
-		}
+			framesPerSecond = 0.3;
 		else
-		{
-			if((myState += 0.15) > Walking + 2)
-				myState = Walking;
-		}
+			framesPerSecond = 0.15;
 	}
 	else
 	{
-		myState = Standing;
+		myState = "stand";
 	}
-	ChangeSprite(myState);
+	std::string newAnim = mySize + "." + myState;
+	std::cout << std::endl;	// For an obscure reason, the game crashes without this line...
+	if(newAnim != currentAnimation->name)
+	{
+		std::cout << newAnim << std::endl;
+		SetAnimation(newAnim);
+	}
 }
 
 /**
@@ -99,7 +98,7 @@ sf::View Mario::GetView() const
 		t = GetPosition().y + (GetSize().y / 2) - (WINDOW_HEIGHT / 2),
 		b = t + WINDOW_HEIGHT;
 
-	// Re-centrate (if out of the limits of the map)
+	// Re-center (if out of the limits of the map)
 	if(l < 0)
 	{
 		l = 0;
