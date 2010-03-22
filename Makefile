@@ -36,8 +36,8 @@ main.o: Game.h ImageManager.h Map.h Tile.h TileAttributes.h config.h
 Collision.o: Collision.h
 Mario.o: Collision.h ImageManager.h Map.h Mario.h Tile.h TileAttributes.h config.h
 
-$(EXEC): Collision.o Game.o ImageManager.o main.o Map.o Mario.o
-	$(CXX) Collision.o Game.o ImageManager.o main.o Map.o Mario.o -o $(EXEC) $(LDFLAGS)
+$(EXEC): Collision.o Game.o ImageManager.o main.o Map.o Mario.o AnimatedSprite.o
+	$(CXX) Collision.o Game.o ImageManager.o main.o Map.o Mario.o AnimatedSprite.o -o $(EXEC) $(LDFLAGS)
 clean:
 	$(RM) -f *~
 	$(RM) -f maps/*~

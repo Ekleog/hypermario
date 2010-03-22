@@ -68,15 +68,7 @@ class Mario : public AnimatedSprite
 		 * @param map the map on which Mario is evoluting
 		 */
 		Mario(const size_t PosX, const size_t PosY, const Map &map, const sf::Uint16 Lifes)
-			: myIsGoingLeft(false), myIsGoingRight(false), myIsJumping(false), myIsRunning(false)
-			  , mySpeedY(0)
-			  , myMap(&map)
-			  , myReturnPosX(PosX * TILES_WIDTH), myReturnPosY((PosY - 1) * TILES_HEIGHT)
-			  , mySize("small")
-			  , myLifes(Lifes)
-			  , myLost(false)
-			  , myState("stand")
-			, AnimatedSprite(std::string("images/mario!.png\n"
+			: AnimatedSprite(std::string("images/mario!.png\n"
 					"default 1\n"
 					"small.stand 1\n"
 					"small.walk 3\n"
@@ -98,6 +90,14 @@ class Mario : public AnimatedSprite
 					"fire.crouch 1\n"
 					"fire.swim 6\n"
 					"fire.unknown 8"))
+			  , myIsGoingLeft(false), myIsGoingRight(false), myIsJumping(false), myIsRunning(false)
+			  , mySpeedY(0)
+			  , myMap(&map)
+			  , myReturnPosX(PosX * TILES_WIDTH), myReturnPosY((PosY - 1) * TILES_HEIGHT)
+			  , mySize("small")
+			  , myLifes(Lifes)
+			  , myLost(false)
+			  , myState("stand")
 		{
 			SetPosition(PosX * TILES_WIDTH, (PosY - 1) * TILES_HEIGHT);
 			mySize = "fire";

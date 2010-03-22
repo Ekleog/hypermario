@@ -13,15 +13,16 @@
 class AnimatedSprite : public sf::Sprite
 {
 public:
-	float framesPerSecond;
-	AnimatedSprite(const std::string& data);
-	virtual ~AnimatedSprite(void);
+	float secondsPerFrame;
 
-	virtual void Update(void);
+	AnimatedSprite(const std::string& data);
+	virtual ~AnimatedSprite() {}
+
+	virtual void Update();
 	void SetAnimation(const std::string& name);
-	std::string& GetAnimation(void);
+	std::string& GetAnimation();
 	void SetFrame(float frame);
-	float GetFrame(void);
+	float GetFrame();
 
 protected:
 	struct Animation

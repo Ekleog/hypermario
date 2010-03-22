@@ -11,11 +11,11 @@
 #include "Map.h"
 #include "Tile.h"
 #include "TileAttributes.h"
-#include <iostream>
+
 /**
  * It updates the Mario
  *
- * @author Lenoa
+ * @author Lenoa, iSma
  */
 void Mario::Update()
 {
@@ -68,21 +68,17 @@ void Mario::Update()
 	{
 		myState = "walk";
 		if(myIsRunning)
-			framesPerSecond = 0.3;
+			secondsPerFrame = 0.3;
 		else
-			framesPerSecond = 0.15;
+			secondsPerFrame = 0.15;
 	}
 	else
 	{
 		myState = "stand";
 	}
 	std::string newAnim = mySize + "." + myState;
-	std::cout << std::endl;	// For an obscure reason, the game crashes without this line...
 	if(newAnim != currentAnimation->name)
-	{
-		std::cout << newAnim << std::endl;
 		SetAnimation(newAnim);
-	}
 }
 
 /**

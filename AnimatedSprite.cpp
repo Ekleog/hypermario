@@ -11,7 +11,7 @@
 
 AnimatedSprite::AnimatedSprite(const std::string& data)
 {
-	std::istringstream stream(data, std::istringstream::in);
+	std::istringstream stream(data, std::ios::in);
 	Animation newAnim;
 	int i = 0, max = 0;;
 
@@ -33,14 +33,9 @@ AnimatedSprite::AnimatedSprite(const std::string& data)
 	currentAnimation = &newAnim;
 }
 
-AnimatedSprite::~AnimatedSprite(void)
-{
-	// TODO Auto-generated destructor stub
-}
-
 void AnimatedSprite::Update(void)
 {
-	SetFrame(currentFrame + framesPerSecond);
+	SetFrame(currentFrame + secondsPerFrame);
 }
 
 void AnimatedSprite::SetAnimation(const std::string& name)
