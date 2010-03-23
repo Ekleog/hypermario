@@ -30,7 +30,7 @@ AnimatedSprite::AnimatedSprite(const std::string& data)
 	frameSize = sf::IntRect(0, 0, 0, 0);
 	frameSize.Bottom = GetImage()->GetHeight() / i;
 	frameSize.Right  = GetImage()->GetWidth() / max;
-	currentAnimation = &newAnim;
+	currentAnimation = &animations[newAnim.name];
 }
 
 void AnimatedSprite::Update(void)
