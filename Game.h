@@ -29,6 +29,11 @@ class Game
 
 	public:
 		/**
+		 * The framerate limit of the game
+		 */
+		static unsigned int const framerate = 40;
+
+		/**
 		 * The default constructor
 		 *
 		 * <b>ATTENTION :</b> Do not delete the window/game map before the Game object, otherwise the Game object won't be valid !

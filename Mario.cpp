@@ -68,9 +68,9 @@ void Mario::Update()
 	{
 		myState = "walk";
 		if(myIsRunning)
-			secondsPerFrame = 0.3;
+			framesPerSecond = 12;
 		else
-			secondsPerFrame = 0.15;
+			framesPerSecond = 6;
 	}
 	else
 	{

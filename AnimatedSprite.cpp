@@ -5,9 +5,11 @@
  *      Author: iSma
  */
 
+#include <sstream>
+
 #include "AnimatedSprite.h"
 #include "ImageManager.h"
-#include <sstream>
+#include "Game.h"
 
 AnimatedSprite::AnimatedSprite(const std::string& data)
 {
@@ -35,7 +37,7 @@ AnimatedSprite::AnimatedSprite(const std::string& data)
 
 void AnimatedSprite::Update(void)
 {
-	SetFrame(currentFrame + secondsPerFrame);
+	SetFrame(currentFrame + framesPerSecond / Game::framerate);
 }
 
 void AnimatedSprite::SetAnimation(const std::string& name)

@@ -13,7 +13,7 @@
 class AnimatedSprite : public sf::Sprite
 {
 public:
-	float secondsPerFrame;
+	float framesPerSecond;
 
 	AnimatedSprite(const std::string& data);
 	virtual ~AnimatedSprite() {}
