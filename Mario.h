@@ -68,7 +68,7 @@ class Mario : public AnimatedSprite
 		 * @param map the map on which Mario is evoluting
 		 */
 		Mario(const size_t PosX, const size_t PosY, const Map &map, const sf::Uint16 Lifes)
-			: AnimatedSprite(std::string("images/mario!.png\n"
+			: AnimatedSprite(std::string("images/mario.png\n"
 					"default 1\n"
 					"small.stand 1\n"
 					"small.walk 3\n"
