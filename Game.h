@@ -1,5 +1,6 @@
-/**
- * @author Lenoa
+/*!
+ * \file Game.h
+ * \author Lenoa
  */
 
 #ifndef GAME_INCLUDED
@@ -9,46 +10,21 @@
 
 #include "Map.h"
 
-/**
- * It models a game of Hypermario
- *
- * @author Lenoa
+/*!
+ * \class Game
+ * \brief It models a game of Hypermario
  */
 class Game
 {
-	private:
-		/**
-		 * The window in which render the game
-		 */
-		sf::RenderWindow *myWindow;
+    private:
+        sf::RenderWindow *myWindow; //!< The window in which render the game
+        Map *myMap; //!< The map to play
 
-		/**
-		 * The map to play
-		 */
-		Map *myMap;
+    public:
+        static unsigned int const framerate = 40; //!< The frame rate limit
 
-	public:
-		/**
-		 * The framerate limit of the game
-		 */
-		static unsigned int const framerate = 40;
-
-		/**
-		 * The default constructor
-		 *
-		 * <b>ATTENTION :</b> Do not delete the window/game map before the Game object, otherwise the Game object won't be valid !
-		 *
-		 * @param Window the window on which render the game
-		 * @param GameMap the map to play
-		 */
-		Game(sf::RenderWindow &Window, Map &GameMap)
-			: myWindow(&Window), myMap(&GameMap) {}
-
-		/**
-		 * The method to call to make the game play
-		 */
-		void Run();
+        Game(sf::RenderWindow &Window, Map &GameMap);
+        void Run();
 };
 
 #endif // GAME_INCLUDED
-

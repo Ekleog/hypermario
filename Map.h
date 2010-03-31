@@ -1,5 +1,6 @@
-/**
- * @author Lenoa
+/*!
+ * \file Map.h
+ * \author Ekinox <ekinox1995@gmail.com>
  */
 
 #ifndef MAP_INCLUDED
@@ -13,111 +14,39 @@
 #include "Tile.h"
 #include "TileAttributes.h"
 
-/**
- * This class models a map of the game HyperMario : a double array of tiles.
+/*!
+ * \class Map
+ * \brief This class models a map of the game HyperMario : a double array of tiles.
  *
- * It should be drawed after the background and before the personnages and monsters.
- *
- * @author Lenoa
+ * It should be drawed after the background and before the personages and monsters.
  */
 class Map : public sf::Drawable
 {
-	private:
-		/**
-		 * It is the map : the double array of tiles.
-		 */
-		std::vector<Tile> myTiles;
+    private:
+        std::vector < Tile > myTiles; //!< The map : the array of tiles
+        size_t myMarioPosX, myMarioPosY; //!< The position of Mario at begin
+        size_t myMaxX, myMaxY; //!< The maximum values of X and Y
 
-		/**
-		 * It is the position of Mario at its begin place
-		 */
-		size_t myMarioPosX, myMarioPosY;
+        void Render(sf::RenderTarget &Target) const;
 
-		/**
-		 * It is the maximum values of X and Y
-		 */
-		size_t myMaxX, myMaxY;
+    public:
+        Map(const std::string &File, const std::string &Table);
 
-		/**
-		 * It renders the map to the target
-		 *
-		 * @param Target the target on which render
-		 */
-		void Render(sf::RenderTarget &Target) const;
+        void Reload(const std::string &File, const std::string &Table);
 
-	public:
-		/**
-		 * @param File the file in which load the map
-		 * @param Table the file in which load the correspondancy table of the tiles
-		 */
-		Map(const std::string &File, const std::string &Table)
-			{ Reload(File, Table); }
+        size_t GetMarioPosX() const;
+        size_t GetMarioPosY() const;
 
-		/**
-		 * @param File the file in which load the map
-		 * @param Table the file in which load the correspondancy table of the tiles
-		 */
-		void Reload(const std::string &File, const std::string &Table);
+        size_t GetMaxX() const;
+        size_t GetMaxY() const;
 
-		/**
-		 * @return Mario's X coordinate in the file
-		 */
-		size_t GetMarioPosX() const
-			{ return myMarioPosX; }
-		/**
-		 * @return Mario's Y coordinate in the file
-		 */
-		size_t GetMarioPosY() const
-			{ return myMarioPosY; }
+        std::vector < Tile > &Tiles();
+        const std::vector < Tile > &Tiles() const;
 
-		/**
-		 * @return the maximum value on the X axis
-		 */
-		size_t GetMaxX() const
-			{ return myMaxX; }
-
-		/**
-		 * @return the maximum value on the Y axis
-		 */
-		size_t GetMaxY() const
-			{ return myMaxY; }
-
-		/**
-		 * @return a vector of all the tiles
-		 */
-		std::vector<Tile> &Tiles()
-			{ return myTiles; }
-		/**
-		 * @return a vector of all the tiles
-		 */
-		const std::vector<Tile> &Tiles() const
-			{ return myTiles; }
-	
-		/**
-		 * @param Rect the bounding rect of the figure
-		 * @param Max the max going to the top
-		 * @return the maximm number of pixel Mario can go to the top
-		 */
-		float TopMax(const sf::Sprite &Rect, float Max) const;
-		/**
-		 * @param Rect the bounding rect of the figure
-		 * @param Max the max going to the bottom
-		 * @return the maximm number of pixel Mario can go to the bottom
-		 */
-		float BottomMax(const sf::Sprite &Rect, float Max) const;
-		/**
-		 * @param Rect the bounding rect of the figure
-		 * @param Max the max going to the left
-		 * @return the maximm number of pixel Mario can go to the left
-		 */
-		float LeftMax(const sf::Sprite &Rect, float Max) const;
-		/**
-		 * @param Rect the bounding rect of the figure
-		 * @param Max the max going to the right
-		 * @return the maximm number of pixel Mario can go to the right
-		 */
-		float RightMax(const sf::Sprite &Rect, float Max) const;
+        float TopMax(const sf::Sprite &Rect, float Max) const;
+        float BottomMax(const sf::Sprite &Rect, float Max) const;
+        float LeftMax(const sf::Sprite &Rect, float Max) const;
+        float RightMax(const sf::Sprite &Rect, float Max) const;
 };
 
 #endif // MAP_INCLUDED
-

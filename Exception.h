@@ -1,5 +1,6 @@
-/**
- * @author Lenoa
+/*!
+ * \file Exception.h
+ * \author Ekinox <ekinox1995@gmail.com>
  */
 
 #ifndef EXCEPTION_INCLUDED
@@ -7,34 +8,30 @@
 
 #include <exception>
 
-/**
+/*!
  * This class models an exception in Hypermario's project.
- *
- * @author Lenoa
  */
 class Exception : public std::exception
 {
-	private:
-		/**
-		 * The message of the exception.
-		 */
-		const char *myMessage;
+    private:
+        const char *myMessage; //!< The message of the exception
 
-	public:
-		/**
-		 * @param Message the message of the exception
-		 */
-		Exception(const char *Message = "Unknown exception !")
-			: myMessage(Message) {}
+    public:
+        /*!
+         * \param Message The message of the exception
+         */
+        Exception(const char *Message = "Unknown exception !") :
+            myMessage(Message)
+        {
+        }
 
-		/**
-		 * @return the message of the exception
-		 */
-		virtual const char *what() const throw()
-		{
-			return myMessage;
-		}
+        /*!
+         * \return The message of the exception
+         */
+        virtual const char *what() const throw ()
+        {
+            return myMessage;
+        }
 };
 
 #endif // EXCEPTION_INCLUDED
-
