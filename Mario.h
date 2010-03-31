@@ -100,7 +100,6 @@ class Mario : public AnimatedSprite
 			  , myState("stand")
 		{
 			SetPosition(PosX * TILES_WIDTH, (PosY - 1) * TILES_HEIGHT);
-			mySize = "fire";
 		}
 
 		/**
