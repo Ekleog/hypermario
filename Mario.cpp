@@ -5,6 +5,8 @@
 
 #include "Mario.h"
 
+#include <fstream>
+
 #include <SFML/Graphics.hpp>
 
 #include "config.h"
@@ -20,33 +22,14 @@
  */
 Mario::Mario(const size_t PosX, const size_t PosY, const Map &map,
              const sf::Uint16 Lifes) :
-    AnimatedSprite(std::string("images/mario.png\n"
-        "default 1\n"
-        "small.stand 1\n"
-        "small.walk 3\n"
-        "small.turn 1\n"
-        "small.jump 1\n"
-        "small.swim 4\n"
-        "tall.stand 1\n"
-        "tall.walk 3\n"
-        "tall.turn 1\n"
-        "tall.jump 1\n"
-        "tall.crouch 1\n"
-        "tall.swim 6\n"
-        "tall.unknown 8\n"
-        "fire.stand 1\n"
-        "fire.walk 3\n"
-        "fire.fire 1\n"
-        "fire.turn 1\n"
-        "fire.jump 1\n"
-        "fire.crouch 1\n"
-        "fire.swim 6\n"
-        "fire.unknown 8")), myIsGoingLeft(false), myIsGoingRight(false),
-            myIsJumping(false), myIsRunning(false), mySpeedY(0), myMap(&map),
-            myReturnPosX(PosX * TILES_WIDTH), myReturnPosY((PosY - 1)
-                    * TILES_HEIGHT), mySize("small"), myLifes(Lifes),
-            myLost(false), myState("stand")
+    AnimatedSprite(),
+            myIsGoingLeft(false), myIsGoingRight(false), myIsJumping(false),
+            myIsRunning(false), mySpeedY(0), myMap(&map), myReturnPosX(PosX
+                    * TILES_WIDTH), myReturnPosY((PosY - 1) * TILES_HEIGHT),
+            mySize("small"), myLifes(Lifes), myLost(false), myState("stand")
 {
+    std::ifstream properties("images/mario.properties");
+    Load(properties);
     SetPosition(PosX * TILES_WIDTH, (PosY - 1) * TILES_HEIGHT);
 }
 

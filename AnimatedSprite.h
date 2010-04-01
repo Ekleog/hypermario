@@ -1,10 +1,12 @@
 /*!
  * \file AnimatedSprite.h
- * \author iSma
+ * \author iSma, Ekinox <ekinox1995@gmail.com>
  */
 
 #ifndef ANIMATEDSPRITE_H_
 #define ANIMATEDSPRITE_H_
+
+#include <iosfwd>
 
 #include <SFML/Graphics.hpp>
 
@@ -17,8 +19,11 @@ class AnimatedSprite : public sf::Sprite
     public:
         float framesPerSecond;
 
-        AnimatedSprite(const std::string& data);
+        AnimatedSprite();
+        AnimatedSprite(std::istream& data);
         virtual ~AnimatedSprite();
+
+        void Load(std::istream& data);
 
         virtual void Update();
 

@@ -1,32 +1,55 @@
 /*!
  * \file AnimatedSprite.cpp
- * \author iSma
+ * \author iSma, Ekinox <ekinox1995@gmail.com>
  */
 
-#include <sstream>
+#include <iostream>
 
 #include "AnimatedSprite.h"
 #include "ImageManager.h"
 #include "Game.h"
 
 /*!
- * \brief The constructor of AnimatedSprite
- * \param data The string to parse
- * \return
+ * \brief The constructor of AnimatedSprite which does nothing
  */
-AnimatedSprite::AnimatedSprite(const std::string& data)
+AnimatedSprite::AnimatedSprite()
 {
-    std::istringstream stream(data, std::ios::in);
+}
+
+/*!
+ * \brief The constructor of AnimatedSprite
+ * \param data The data to parse
+ */
+AnimatedSprite::AnimatedSprite(std::istream& data)
+{
+    Load(data);
+}
+
+/*!
+ * \brief The destructor of AnimatedSprite
+ */
+AnimatedSprite::~AnimatedSprite()
+{
+}
+
+/*!
+ * \brief Loads the data {data} to the animated sprite.
+ * \param data The data to parse
+ *
+ * {data} must be a valid file.
+ */
+void AnimatedSprite::Load(std::istream& data)
+{
     Animation newAnim;
     int i = 0, max = 0;
 
-    stream >> newAnim.name;
+    data >> newAnim.name;
 
     SetImage(ImageManager::Get(newAnim.name));
 
-    while (!stream.eof())
+    while (!data.eof())
     {
-        stream >> newAnim.name >> newAnim.duration;
+        data >> newAnim.name >> newAnim.duration;
         newAnim.row = i++;
         animations[newAnim.name] = newAnim;
         max = newAnim.duration > max ? newAnim.duration : max;
@@ -36,14 +59,6 @@ AnimatedSprite::AnimatedSprite(const std::string& data)
     frameSize.Bottom = GetImage()->GetHeight() / i;
     frameSize.Right = GetImage()->GetWidth() / max;
     currentAnimation = &animations[newAnim.name];
-}
-
-/*!
- * \brief The destructor of AnimatedSprite
- * \return
- */
-AnimatedSprite::~AnimatedSprite()
-{
 }
 
 /*!
